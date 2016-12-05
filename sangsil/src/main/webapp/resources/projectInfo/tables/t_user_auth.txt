@@ -1,0 +1,22 @@
+drop table t_user;
+
+		
+
+CREATE TABLE `t_user_auth` (
+		`login_gbn` varchar(50) NOT NULL COMMENT '로그인아이디구',
+		`user_id` varchar(50) NOT NULL COMMENT '아이디',
+		`user_auth` varchar(50) DEFAULT 'U',
+		`use_yn` char(1) DEFAULT 'Y',										 
+		`in_date` datetime DEFAULT NULL,
+		`in_user` varchar(50) DEFAULT NULL, 
+		`in_ip` varchar(20) DEFAULT NULL, 
+		`up_date` datetime DEFAULT NULL,
+		`up_user` varchar(50) DEFAULT NULL, 
+		`up_ip` varchar(20) DEFAULT NULL,
+		PRIMARY KEY (`login_gbn`, `user_id`)										
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+        
+        
+insert into t_user_auth(login_gbn,user_id,user_auth) values('NAVER','95712832','A');
+
+

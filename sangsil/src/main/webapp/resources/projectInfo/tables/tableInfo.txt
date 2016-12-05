@@ -1,0 +1,3 @@
+권한설정
+
+grant all privileges on mee.* to root@localhost identified by 'mysql';

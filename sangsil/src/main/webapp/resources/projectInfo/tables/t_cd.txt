@@ -1,0 +1,71 @@
+/*	 정렬순서 추가	*/
+
+drop table t_cd;
+
+CREATE TABLE `t_cd` (
+			`auto_id` int(10) NOT NULL AUTO_INCREMENT,
+			`cd_id` varchar(10) NOT NULL UNIQUE COMMENT '코드아이디',  
+			`high_cd_id` varchar(10) DEFAULT null COMMENT '상위코드아이디',
+			`cd_nm` varchar(100) DEFAULT NULL COMMENT '코드명',                
+			`cd_cmt` varchar(100) DEFAULT NULL COMMENT '코드설명',                
+			`cd_type` varchar(10) DEFAULT 'AAA10' COMMENT '코드권한',
+			`disp_order` int(5) DEFAULT 1 COMMENT '정렬순서',                    
+			`use_yn` char(1) DEFAULT 'Y', 
+			`in_date` datetime DEFAULT NULL,
+			`in_user` varchar(50) DEFAULT NULL, 
+			`in_ip` varchar(20) DEFAULT NULL, 
+			`up_date` datetime DEFAULT NULL,
+			`up_user` varchar(50) DEFAULT NULL, 
+			`up_ip` varchar(20) DEFAULT NULL,                                           
+              PRIMARY KEY (`auto_id`)                                               
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+/*	회원권한	*/
+insert into t_cd (cd_id, cd_nm, in_user, in_date)values('AAA', '회원권한', 'admin', now());
+insert into t_cd (cd_id, high_cd_id, cd_nm, in_user, in_date)values('AAA01', 'AAA', '전체관리자', 'admin', now());
+insert into t_cd (cd_id, high_cd_id, cd_nm, in_user, in_date)values('AAA02', 'AAA', '일반관리자', 'admin', now());
+insert into t_cd (cd_id, high_cd_id, cd_nm, in_user, in_date)values('AAA10', 'AAA', '일반회원', 'admin', now());
+
+/*	 게시판 구분	*/
+insert into t_cd (cd_id, cd_nm, in_user, in_date)values('BAA', '게시판 구분', 'admin', now());
+insert into t_cd (cd_id, high_cd_id, cd_nm, in_user, in_date)values('BAA01', 'BAA', '개발게시판', 'admin', now());
+
+
+/*	 즐겨찾기 카테고리	*/
+insert into t_cd (cd_id, cd_nm, in_user, in_date)values('CAA', '즐겨찾기 카테고리', 'admin', now());
+insert into t_cd (cd_id, high_cd_id, cd_nm, in_user, in_date)values('CAA01', 'CAA', '일반', 'admin', now());
+insert into t_cd (cd_id, high_cd_id, cd_nm, in_user, in_date)values('CAA02', 'CAA', '개발정보', 'admin', now());
+insert into t_cd (cd_id, high_cd_id, cd_nm, in_user, in_date)values('CAA03', 'CAA', '기타정보', 'admin', now());
+insert into t_cd (cd_id, high_cd_id, cd_nm, in_user, in_date)values('CAA04', 'CAA', '운영', 'admin', now());
+insert into t_cd (cd_id, high_cd_id, cd_nm, in_user, in_date)values('CAA05', 'CAA', '스테이징', 'admin', now());
+insert into t_cd (cd_id, high_cd_id, cd_nm, in_user, in_date)values('CAA06', 'CAA', '개발', 'admin', now());
+insert into t_cd (cd_id, high_cd_id, cd_nm, in_user, in_date)values('CAA07', 'CAA', '로컬', 'admin', now());
+
+/*	 개발 게시판 카테고리	*/
+insert into t_cd (cd_id, cd_nm, in_user, in_date)values('CBA', '개발 게시판 카테고리', 'admin', now());
+insert into t_cd (cd_id, high_cd_id, cd_nm, in_user, in_date)values('CBA01', 'CBA', 'JAVA', 'admin', now());
+insert into t_cd (cd_id, high_cd_id, cd_nm, in_user, in_date)values('CBA02', 'CBA', 'JSP', 'admin', now());
+insert into t_cd (cd_id, high_cd_id, cd_nm, in_user, in_date)values('CBA03', 'CBA', 'ORACLE', 'admin', now());
+insert into t_cd (cd_id, high_cd_id, cd_nm, in_user, in_date)values('CBA04', 'CBA', 'MYSQL', 'admin', now());
+insert into t_cd (cd_id, high_cd_id, cd_nm, in_user, in_date)values('CBA05', 'CBA', 'JAVASCRIPT', 'admin', now());
+insert into t_cd (cd_id, high_cd_id, cd_nm, in_user, in_date)values('CBA06', 'CBA', 'HTML', 'admin', now());
+insert into t_cd (cd_id, high_cd_id, cd_nm, in_user, in_date)values('CBA07', 'CBA', 'SERVER', 'admin', now());
+
+/*	 개발 게시판 태그	*/
+insert into t_cd (cd_id, cd_nm, in_user, in_date)values('DAA', '개발 게시판 태그', 'admin', now());
+insert into t_cd (cd_id, high_cd_id, cd_nm, in_user, in_date)values('DAA01', 'DAA', '오류', 'admin', now());
+insert into t_cd (cd_id, high_cd_id, cd_nm, in_user, in_date)values('DAA02', 'DAA', '메뉴얼', 'admin', now());
+insert into t_cd (cd_id, high_cd_id, cd_nm, in_user, in_date)values('DAA03', 'DAA', '뉴스', 'admin', now());
+insert into t_cd (cd_id, high_cd_id, cd_nm, in_user, in_date)values('DAA04', 'DAA', '팁', 'admin', now());
+insert into t_cd (cd_id, high_cd_id, cd_nm, in_user, in_date)values('DAA05', 'DAA', '기타', 'admin', now());
+
+/*	 테스트	*/
+insert into t_cd (cd_id, cd_nm, in_user, in_date)values('AAK', '테스타', 'admin', now());
+insert into t_cd (cd_id, high_cd_id, cd_nm, in_user, in_date)values('AAK01', 'AAK', '테스타1', 'admin', now());
+insert into t_cd (cd_id, high_cd_id, cd_nm, in_user, in_date)values('AAK02', 'AAK', '테스타2', 'admin', now());
+insert into t_cd (cd_id, high_cd_id, cd_nm, in_user, in_date)values('AAK03', 'AAK', '테스타3', 'admin', now());
+
+
+
+

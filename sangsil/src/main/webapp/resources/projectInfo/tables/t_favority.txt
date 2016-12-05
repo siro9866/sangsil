@@ -1,0 +1,24 @@
+drop table t_favority;
+
+CREATE TABLE `t_favority` ( 
+	`favority_id` int(10) NOT NULL AUTO_INCREMENT,
+	`cd_id` varchar(10) DEFAULT NULL COMMENT '즐겨찾기 구분',
+	`favority_nm` varchar(100) DEFAULT NULL COMMENT '즐겨찾기명',
+	`favority_url` varchar(100) DEFAULT NULL COMMENT '즐겨찾기url',
+	`favority_img` varchar(100) DEFAULT '/images/common/noImage.png' COMMENT '즐겨찾기 이미지url',
+	`favority_cmt` text DEFAULT NULL COMMENT '코멘트',
+	`disp_order` int(5) DEFAULT 1 COMMENT '정렬순서',
+	`hit_cnt` int(5) DEFAULT 0		COMMENT '조회수',
+	`use_yn` char(1) DEFAULT 'Y', 
+	`in_date` datetime DEFAULT NULL,
+	`in_user` varchar(50) DEFAULT NULL, 
+	`in_ip` varchar(20) DEFAULT NULL, 
+	`up_date` datetime DEFAULT NULL,
+	`up_user` varchar(50) DEFAULT NULL, 
+	`up_ip` varchar(20) DEFAULT NULL, 
+	PRIMARY KEY (`favority_id`) 
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+
+insert into t_favority( cd_id, favority_nm, favority_url, favority_img, favority_cmt, disp_order, in_date, in_user, in_ip ) values ( 'CAA01', '다음', 'http://daum.net', 'https://www.google.co.kr/images/srpr/logo11w.png', '다음입니다', '1', NOW(), 'admin', '127.0.0.1' );

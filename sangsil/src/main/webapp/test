@@ -1,0 +1,7 @@
+UPDATE t_user SET
+	login_cnt = login_cnt + 1
+	, login_date = NOW()
+	, up_date = NOW()
+	, up_user = #{up_user}
+	, up_ip = #{up_ip}
+WHERE user_id = #{up_ip}

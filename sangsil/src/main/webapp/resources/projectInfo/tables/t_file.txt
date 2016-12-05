@@ -1,0 +1,24 @@
+drop table t_file;
+
+CREATE TABLE `t_file` (
+	`file_id` int(10) NOT NULL auto_increment COMMENT '첨부파일일련번호',
+	`board_id` int(10) NOT NULL COMMENT '글번호',
+	`board_gbn` varchar(10) NOT NULL COMMENT '게시판구분',
+	`path_name` varchar(200) NOT NULL COMMENT '저장경로', 
+	`originalFileName` varchar(200) NOT NULL COMMENT '첨부파일명', 
+	`file_name` varchar(100) NOT NULL COMMENT '서버에 저장된 파일명(변경된)',
+	`file_size` varchar(10) NOT NULL COMMENT '첨부파일용량', 
+	`file_ext` varchar(10) NOT NULL COMMENT '첨부파일 확장자', 
+	`disp_order` int(3) DEFAULT '1',
+	`use_yn` char(1) DEFAULT 'Y',
+	`in_date` datetime DEFAULT NULL,
+	`in_user` varchar(50) DEFAULT NULL, 
+	`in_ip` varchar(20) DEFAULT NULL, 
+	`up_date` datetime DEFAULT NULL,
+	`up_user` varchar(50) DEFAULT NULL, 
+	`up_ip` varchar(20) DEFAULT NULL,
+	 PRIMARY KEY(`file_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+ALTER TABLE `t_file` ADD COLUMN `view_path_name` varchar(200) NOT NULL COMMENT '이미지뷰패스' AFTER `path_name`;

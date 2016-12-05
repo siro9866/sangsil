@@ -1,0 +1,15 @@
+drop table t_login_history;
+
+		
+
+CREATE TABLE `t_login_history` (
+		`history_id` int(10) NOT NULL AUTO_INCREMENT COMMENT '순',
+		`user_id` varchar(50) NOT NULL COMMENT '아이디',
+		`login_gbn` varchar(50) NOT NULL COMMENT '로그인아이디구',
+		`in_date` datetime DEFAULT NULL,
+		`in_user` varchar(50) DEFAULT NULL, 
+		`in_ip` varchar(20) DEFAULT NULL,
+		PRIMARY KEY (`history_id`)										
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+        
+

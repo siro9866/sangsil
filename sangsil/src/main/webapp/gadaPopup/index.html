@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<title>POP</title>
+	
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+	<script src="js/jquery.rwdImageMaps.min.js"></script>
+<style>
+	
+body {
+	font-family: '나눔고딕', NanumGothic, '돋움', Dotum, Helvetica, 'Apple SD Gothic Neo', Sans-serif;
+	font-size: 10pt;text-decoration: none;background-color: rgba(255,255,255,1);margin: 0px;padding: 0px;
+	}
+
+.wrap {	
+background-color: rgba(255,255,255,1);
+max-width: 1280px;
+width: 100%;
+margin-top: 0px;
+margin-right: auto;
+margin-bottom: 0px;
+margin-left: auto;
+}
+
+.header{margin: 0px; padding: 0px;}
+
+.bgImg{width: 100%; max-width: 1280px; vertical-align: middle}
+
+#pageVal{ text-align: center; margin:10px 0px;}
+
+#ansText{position: absolute; text-align: center; margin-top: 100px; margin-left:20%;font-size: 30pt;font-weight: normal, bold, bolder, lighter;}
+#resultText{position: absolute; text-align: center; margin-top: 200px; margin-left:20%;font-size: 30pt;font-weight: normal, bold, bolder, lighter;}
+
+
+
+</style>
+	
+	
+	<script type="text/javascript">
+	
+	$(function(){
+		
+		// 화면사이즈 변경시 map 좌표유동
+		$('img[usemap]').rwdImageMaps();
+		
+		// 정답 점수 
+		var myScore = 0;
+		// 문항별 정답
+		var qNa = {1:"Y", 2:"N", 3:"Y", 4:"N", 5:"Y"};
+		
+// 		alert(qNa["1"]+"\n"+qNa["2"]+"\n"+qNa["3"]+"\n"+qNa["4"]+"\n"+qNa["5"]);
+		
+		//답안 체크
+		goAns = function(no, ans){
+			//alert(no+":"+ans);
+			$('img[usemap]').rwdImageMaps();
+			// 정답일 경우 myScore 점수플러스
+			if(qNa[no] == ans){myScore++;}
+			
+			$("#con"+no+"_q").hide();
+			$("#con"+no+"_a").show();
+			
+			var ansTxt = "그렇습니다.";
+			if(ans == "N"){ 
+				ansTxt = "그렇지 않습니다.";
+				$("#ansText").css("color","rgba(244,67,54,1)");
+			}else{
+				$("#ansText").css("color","rgba(0,150,136,1)");
+			}
+			$("#ansText").text(ansTxt);
+			
+			$("#ansText").show();
+		};
+		
+		// 다음페이지
+		goNext = function(pageNo){
+// 			alert("myScore:"+myScore);
+			$('img[usemap]').rwdImageMaps();
+			$("#con1,#con2,#con3,#con4,#con5").hide();
+			$("#ansText").hide();
+			$("#con"+pageNo).show();
+			// 하단부 페이지 넘버
+			$("#pageNo").text(pageNo);
+			$("#pageVal").show();
+		};
+	
+		// 결과페이지 
+		goResult = function(){
+			$('img[usemap]').rwdImageMaps();
+			$("#con1,#con2,#con3,#con4,#con5").hide();
+			$("#conResult").show();
+			$("#ansText").hide();
+			// 하단부 페이지 넘버
+			$("#pageNo").hide();
+			$("#pageVal").hide();
+			$("#resultScore").text(myScore);
+		}
+		
+		// 다시풀기
+		reQuiz = function(){
+			location.reload();
+		}
+		
+		
+	});
+	
+	</script>	
+	
+</head>
+<body>
+
+<div class="wrap">
+
+	<!--	container	-->
+    <div class="container">
+	
+		<!-- header -->
+		<div class="header">
+			<img src="images/header.jpg" class="bgImg"/>
+		</div>
+		
+		<div class="contents">
+		
+			<div id="ansText" style="display:none"></div>
+		
+			<div id="con1">
+				<div id="con1_q">
+					<img src="images/bg1.jpg" class="bgImg" usemap="#con1_q" border="0">
+					<map name="con1_q">
+						<area shape="rect" coords="100,400,300,600" href="javascript:goAns('1','Y');">
+						<area shape="rect" coords="700,400,900,600" href="javascript:goAns('1','N');">
+					</map>
+					
+				</div>
+				<div id="con1_a" style="display:none">
+					<img src="images/bg1_a.jpg" class="bgImg" usemap="#con1_a" border="0">
+					<map name="con1_a">
+						<area shape="rect" coords="100,400,900,600" href="javascript:goNext('2');">
+					</map>
+					<!-- 결과텍스트 -->
+					<!-- <div class="ansText" style="display:none"></div> -->
+				</div>
+			</div>
+			
+
+			<div id="con2" style="display:none">
+				<div id="con2_q">
+					<img src="images/bg2.jpg" class="bgImg" usemap="#con2_q" border="0">
+					<map name="con2_q">
+						<area shape="rect" coords="100,400,300,600" href="javascript:goAns('2','Y');">
+						<area shape="rect" coords="700,400,900,600" href="javascript:goAns('2','N');">
+					</map>
+					
+				</div>
+				<div id="con2_a" style="display:none">
+					<img src="images/bg2_a.jpg" class="bgImg" usemap="#con2_a" border="0">
+					<map name="con2_a">
+						<area shape="rect" coords="100,400,900,600" href="javascript:goNext('3');">
+					</map>
+					<!-- 결과텍스트 -->
+					<!-- <div class="ansText" style="display:none"></div> -->
+				</div>
+			</div>
+
+
+			<div id="con3" style="display:none">
+				<div id="con3_q">
+					<img src="images/bg3.jpg" class="bgImg" usemap="#con3_q" border="0">
+					<map name="con3_q">
+						<area shape="rect" coords="100,400,300,600" href="javascript:goAns('3','Y');">
+						<area shape="rect" coords="700,400,900,600" href="javascript:goAns('3','N');">
+					</map>
+					
+				</div>
+				<div id="con3_a" style="display:none">
+					<img src="images/bg3_a.jpg" class="bgImg" usemap="#con3_a" border="0">
+					<map name="con3_a">
+						<area shape="rect" coords="100,400,900,600" href="javascript:goNext('4');">
+					</map>
+					<!-- 결과텍스트 -->
+					<!-- <div class="ansText" style="display:none"></div> -->
+				</div>
+			</div>
+			
+
+			<div id="con4" style="display:none">
+				<div id="con4_q">
+					<img src="images/bg4.jpg" class="bgImg" usemap="#con4_q" border="0">
+					<map name="con4_q">
+						<area shape="rect" coords="100,400,300,600" href="javascript:goAns('4','Y');">
+						<area shape="rect" coords="700,400,900,600" href="javascript:goAns('4','N');">
+					</map>
+					
+				</div>
+				<div id="con4_a" style="display:none">
+					<img src="images/bg4_a.jpg" class="bgImg" usemap="#con4_a" border="0">
+					<map name="con4_a">
+						<area shape="rect" coords="100,400,900,600" href="javascript:goNext('5');">
+					</map>
+					<!-- 결과텍스트 -->
+					<!-- <div class="ansText" style="display:none"></div> -->
+				</div>
+			</div>
+			
+
+			<div id="con5" style="display:none">
+				<div id="con5_q">
+					<img src="images/bg5.jpg" class="bgImg" usemap="#con5_q" border="0">
+					<map name="con5_q">
+						<area shape="rect" coords="100,400,300,600" href="javascript:goAns('5','Y');">
+						<area shape="rect" coords="700,400,900,600" href="javascript:goAns('5','N');">
+					</map>
+					
+				</div>
+				<div id="con5_a" style="display:none">
+					<img src="images/bg5_a.jpg" class="bgImg" usemap="#con5_a" border="0">
+					<map name="con5_a">
+						<area shape="rect" coords="100,400,900,600" href="javascript:goResult();">
+					</map>
+					<!-- 결과텍스트 -->
+					<!-- <div class="ansText" style="display:none"></div> -->
+				</div>
+			</div>
+			
+			
+			<div id="conResult" style="display:none">
+				<div id="resultText">
+					5문항중 <span id="resultScore">1</span>개를 맞췄습니다
+				</div>
+				<div id="con6_q">
+					<img src="images/bg_result.jpg" class="bgImg" usemap="#conResult" border="0">
+					<map name="conResult">
+						<area shape="rect" coords="100,400,300,600" href="javascript:reQuiz();">
+						<area shape="rect" coords="700,400,900,600" href="javascript:self.close();">
+					</map>
+					
+				</div>
+			</div>
+			
+			<!-- PAGE NO -->
+			<div id="pageVal">
+				<span id="pageNo">1</span> / <span id="totPageNo">5</span>
+			</div>
+			
+		</div>
+		
+		<!-- footer -->
+		<div class="footer">
+			<img src="images/footer.jpg" class="bgImg" />
+		</div>	
+	</div>
+</div>
+
+</body>
+</html>

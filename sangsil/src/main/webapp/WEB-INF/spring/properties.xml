@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd" >
+<properties>
+
+	<comment>프로퍼티</comment>
+
+<!--S: 로컬|서버 구분해서 해야함 -->
+	<!-- DB 스키마명 -->
+	<!-- 서버 -->
+	<entry key="TABLESC">siro9866</entry>
+
+	<!-- 로그인 기관 -->
+	<entry key="LOGIN_GBN_00">MEE</entry>
+	<entry key="LOGIN_GBN_01">NAVER</entry>
+	<entry key="LOGIN_GBN_02">KAKAO</entry>
+	<entry key="LOGIN_GBN_03">GOOGLE</entry>
+	<entry key="LOGIN_GBN_04">FACEBOOK</entry>
+	<entry key="LOGIN_GBN_05">TWITTER</entry>
+		
+	<!-- 네이버 아이디 로그인 설 -->
+	<entry key="NAVER_LOGIN_URL">https://nid.naver.com/oauth2.0</entry>
+	<entry key="NAVER_LOGIN_CLIENT_ID">aDbtAQP5ImTbn5MWqFfT</entry>
+	<entry key="NAVER_LOGIN_REDIRECT_URI">http://siro9866.cafe24.com/common/login/loginCallback.mee</entry>
+	<entry key="NAVER_LOGIN_CLIENT_SECRET">qxBqZHqD8B</entry>
+	<entry key="NAVER_LOGIN_XML_RESULT">//data/result</entry>
+	<entry key="NAVER_LOGIN_XML_RESPONSE">//data/response</entry>
+	
+	<entry key="KAKAO_LOGIN_APP_ID">8a8cfc4bdf79cbc872cee9ecf8393445</entry>
+	<entry key="FACEBOOK_LOGIN_APP_ID">1099353923450179</entry>
+	
+	<!-- 트위터 아이디 로그인 설 -->
+	<entry key="TWITTER_LOGIN_API_KEY">QSBvh2BkF0cbOgqw7ctbp6Mtn</entry>
+	<entry key="TWITTER_LOGIN_API_SECRET">yPibd62FG5IYKDqidljHywNvzsIod5BGbwhYHPPmnAr3BfiEjw</entry>
+	<entry key="TWITTER_LOGIN_API_OWNER">siro9866</entry>
+	<entry key="TWITTER_LOGIN_API_ID">359256617</entry>
+	
+	<entry key="alertSaveOk">저장되었습니다.</entry>
+	<entry key="alertFail">일시적인 오류입니다. 관리자에게 문의 하세요</entry>
+
+	<!-- 	cat_id -->
+	<entry key="cat_id_0001">0001</entry>
+	<!-- 테이블 명 -->
+	<entry key="TABLE_T_BOARD">t_board</entry>
+	
+	<!-- 업로드경로 -->
+	<entry key="FILEUPLOADPATH_BOARD">board</entry>
+	<!-- 삭제한 파일 이동 경로 -->
+	<entry key="FILEDELETEPATH_BOARD">delete</entry>
+	
+	<!-- 페이징 -->
+	<entry key="pageSize">2</entry>
+	<entry key="blockSize">3</entry>	
+	
+	<!-- 공통코드 아이디 -->
+	<!-- 회원권한 구분 -->
+	<entry key="CD_ID_AAA">AAA</entry>
+	<entry key="CD_ID_AAA01">AAA01</entry>
+	<entry key="CD_ID_AAA02">AAA02</entry>
+	<entry key="CD_ID_AAA10">AAA10</entry>
+	
+	
+	<!-- 게시판 구분 -->
+	<entry key="CD_ID_BAA">BAA</entry>
+	<entry key="CD_ID_BAA01">BAA01</entry>
+	<entry key="CD_ID_BAA02">BAA02</entry>
+	<entry key="CD_ID_BAA03">BAA03</entry>
+	
+	<!-- 즐겨찾기 카테고리 -->
+	<entry key="CD_ID_CAA">CAA</entry>
+	
+	<!-- 개발 게시판 카테고리 -->
+	<entry key="CD_ID_CBA">CBA</entry>
+	<!-- 개발 게시판 태그 -->
+	<entry key="CD_ID_DAA">DAA</entry>
+	
+	<!-- 개발 게시판 카테고리 -->
+	<entry key="CD_ID_CBB">CBB</entry>
+	<!-- 개발 게시판 태그 -->
+	<entry key="CD_ID_DAB">DAB</entry>
+	
+	<!-- 이미 게시판 카테고리 -->
+	<entry key="CD_ID_CBC">CBC</entry>
+	<!-- 이미지 게시판 태그 -->
+	<entry key="CD_ID_DAC">DAC</entry>
+	
+</properties>

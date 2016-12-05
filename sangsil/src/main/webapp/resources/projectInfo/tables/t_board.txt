@@ -1,0 +1,25 @@
+drop table t_board;
+
+CREATE TABLE `t_board` ( 
+	`board_id` int(10) NOT NULL AUTO_INCREMENT COMMENT '글번호',
+	`board_gbn` varchar(10) NOT NULL COMMENT '게시판 구분',
+	`board_cat` varchar(10) NOT NULL COMMENT '카테고리',
+	`board_tag` varchar(10) NOT NULL COMMENT '태그',
+	`board_title` varchar(300) DEFAULT NULL COMMENT '제목', 
+	`board_txt` text DEFAULT NULL	COMMENT '내용',
+	`ans_yn` char(1) DEFAULT 'N'	COMMENT '답변여부', 
+	`disp_order` int(5) DEFAULT 1 COMMENT '정렬순서',
+	`hit_cnt` int(5) DEFAULT 0		COMMENT '조회수',
+	`use_yn` char(1) DEFAULT 'Y', 
+	`in_date` datetime DEFAULT NULL,
+	`in_user` varchar(50) DEFAULT NULL, 
+	`in_ip` varchar(20) DEFAULT NULL, 
+	`up_date` datetime DEFAULT NULL,
+	`up_user` varchar(50) DEFAULT NULL, 
+	`up_ip` varchar(20) DEFAULT NULL,
+	PRIMARY KEY (`board_id`) 
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+
+insert into t_board (board_gbn, board_cat, board_tag, board_title, board_txt) values('BAA01', 'CBA01', 'DAA01', '자자 잘 들어가나요', 'ㅇㅋㅂㄹ 잘도 되는구만');

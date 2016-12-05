@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding= "UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+ 
+<mapper namespace= "app.board">
+
+
+	<select id ="list" parameterType="com.mee.sangsil.dto.BoardDto" resultType="com.mee.sangsil.dto.BoardDto">
+		/* admin.board.list */
+
+		select @i as totCnt, a.*
+		from
+		(
+			select
+				@i := @i + 1 as rowNum
+				, CEIL((@j := @j + 1)/#{pageSize}) as pageNum
+				, imsi.*
+			from(
+			
+						<include refid="listQuery"/>
+						
+						order by board.board_id desc
+						
+				) imsi, (select @i := 0, @j := 0) temp		
+		) a			
+		where pageNum = #{pageNum}
+	</select>
+	
+	
+	<sql id="listQuery">
+		/*	listQuery 리스트 쿼리	*/
+		select
+			board.board_id 
+			, board.board_gbn
+			, (select cd_nm from t_cd where cd_id = board.board_gbn) board_gbnNM
+			, board.board_cat
+			, (select cd_nm from t_cd where cd_id = board.board_cat) board_catNM
+			, board.board_tag
+			, (select cd_nm from t_cd where cd_id = board.board_tag) board_tagNM
+			, board.board_title 
+			, board.board_txt 
+			, board.ans_yn 
+			, board.disp_order 
+			, board.hit_cnt 
+			, board.use_yn 
+			, board.in_date 
+			, board.in_user 
+			, board.in_ip 
+			, board.up_date 
+			, board.up_user 
+			, board.up_ip
+			, files.file_id
+			, files.view_path_name
+            , files.file_name
+		from t_board as board left outer join (select file_id, board_id, board_gbn, view_path_name, file_name, use_yn from t_file where use_yn = 'Y' group by board_id, board_gbn) as files
+		on board.board_id = files.board_id and files.use_yn = 'Y'
+		where board.use_yn = 'Y'
+		and board.board_gbn = #{board_gbn }#
+		<if test="board_cat != null and board_cat != ''">
+			and board.board_cat = #{board_cat }
+		</if>
+		<if test="board_tag != null and board_tag != ''">
+			and board.board_tag = #{board_tag }
+		</if>
+		<if test="searchValue != null and searchValue != ''">
+		and (board.board_title like CONCAT('%', #{searchValue}, '%') or board.board_txt like CONCAT('%', #{searchValue}, '%'))
+		</if>
+		
+	</sql>	
+	
+	
+</mapper>

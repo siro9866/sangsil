@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding= "UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+ 
+<mapper namespace= "admin.user">
+
+
+	<select id ="list" parameterType="com.mee.sangsil.dto.UserDto" resultType="com.mee.sangsil.dto.UserDto">
+		/* admin.user.list */
+
+		select @i as totCnt, a.*
+		from
+		(
+			select
+				@i := @i + 1 as rowNum
+				, CEIL((@j := @j + 1)/#{pageSize}) as pageNum
+				, imsi.*
+			from(
+			
+						<include refid="listQuery"/>
+						
+						order by user.user_id desc
+						
+				) imsi, (select @i := 0, @j := 0) temp		
+		) a			
+		where pageNum = #{pageNum}
+	</select>
+	
+	
+	<sql id="listQuery">
+		/*	listQuery 리스트 쿼리	*/
+		select
+			user.user_id 
+			, user.user_pw
+			, user.user_nm
+			, user.user_img
+			, user.user_auth
+			, (select cd_nm from t_cd where cd_id = user.user_auth) user_authNm
+			, user.login_cnt
+			, user.login_date
+			, user.zip_code
+			, user.addr1
+			, user.addr2
+			, user.tel1
+			, user.tel2
+			, user.tel3
+			, user.phone1
+			, user.phone2
+			, user.phone3
+			, user.use_yn
+			, user.in_date 
+			, user.in_user 
+			, user.in_ip 
+			, user.up_date 
+			, user.up_user 
+			, user.up_ip
+		from t_user as user
+		where 1=1
+		<if test="searchValue != null and searchValue != ''">
+		and (user.user_id like CONCAT('%', #{searchValue}, '%') or user.user_nm like CONCAT('%', #{searchValue}, '%'))
+		</if>
+		
+	</sql>	
+	
+	
+	<select id ="detail" parameterType="com.mee.sangsil.dto.UserDto" resultType="com.mee.sangsil.dto.UserDto">
+		/* admin.user.detail */
+		select
+			user.user_id 
+			, user.user_pw
+			, user.user_nm
+			, user.user_img
+			, user.user_auth
+			, (select cd_nm from t_cd where cd_id = user.user_auth) user_authNM
+			, user.login_cnt
+			, user.login_date
+			, user.zip_code
+			, user.addr1
+			, user.addr2
+			, user.tel1
+			, user.tel2
+			, user.tel3
+			, user.phone1
+			, user.phone2
+			, user.phone3
+			, user.use_yn
+			, user.in_date 
+			, user.in_user 
+			, user.in_ip 
+			, user.up_date 
+			, user.up_user 
+			, user.up_ip
+		from t_user as user
+		where user.user_id = #{user_id}
+	</select>
+	
+	<select id ="detailList" parameterType="com.mee.sangsil.dto.UserDto" resultType="com.mee.sangsil.dto.UserDto">
+		/* admin.user.detail_pre */
+		<include refid="listQuery"/>
+			and user.user_id &lt; #{user_id} + 3 
+			and user.user_id &gt; #{user_id} - 3
+			
+			order by user.user_id
+	</select>
+	
+	<insert id ="insert" parameterType="com.mee.sangsil.dto.UserDto">
+		/* admin.user.insert */
+		insert into t_user( 
+			user_id 
+			, user_pw
+			, user_nm
+			, user_img
+			, user_auth
+			, zip_code
+			, addr1
+			, addr2
+			, tel1
+			, tel2
+			, tel3
+			, phone1
+			, phone2
+			, phone3
+			, in_date 
+			, in_user 
+			, in_ip 
+			, up_date 
+			, up_user 
+			, up_ip
+		) values ( 
+			trim(#{user_id})
+			, trim(PASSWORD(#{user_pw}))
+			, trim(#{user_nm})
+			, trim(#{user_img})
+			, trim(#{user_auth})
+			, trim(#{zip_code})
+			, trim(#{addr1})
+			, trim(#{addr2})
+			, trim(#{tel1})
+			, trim(#{tel2})
+			, trim(#{tel3})
+			, trim(#{phone1})
+			, trim(#{phone2})
+			, trim(#{phone3})
+			, NOW()
+			, #{in_user}
+			, #{in_ip}
+			, NOW()
+			, #{up_user}
+			, #{up_ip}
+		)
+	</insert>
+	
+	<update id="update" parameterType="com.mee.sangsil.dto.UserDto">
+		/* admin.user.update */
+		update t_user 
+			set
+			user_nm = trim(#{user_nm})
+			, user_img = trim(#{user_img})
+			, user_auth = trim(#{user_auth})
+			, zip_code = trim(#{zip_code})
+			, addr1 = trim(#{addr1})
+			, addr2 = trim(#{addr2})
+			, tel1 = trim(#{tel1})
+			, tel2 = trim(#{tel2})
+			, tel3 = trim(#{tel3})
+			, phone1 = trim(#{phone1})
+			, phone2 = trim(#{phone2})
+			, phone3 = trim(#{phone3})			
+			, use_yn = #{use_yn}			
+			, up_date = NOW()
+			, up_user = #{up_user}
+			, up_ip = #{up_ip}
+		where user_id = #{user_id}
+	</update>
+
+	<update id="delete" parameterType="com.mee.sangsil.dto.UserDto">
+		/* admin.user.delete */
+		update t_user 
+			set
+			use_yn = 'N'
+			, up_date = NOW()
+			, up_user = #{up_user}
+			, up_ip = #{up_ip}
+		where user_id = #{user_id}
+	</update>
+	
+	<update id="update_pw" parameterType="com.mee.sangsil.dto.UserDto">
+		/* admin.user.update_pw 비밀번호 변경*/
+		update t_user 
+			set
+			, user_pw = trim(PASSWORD(#{user_pw}))
+			, up_date = NOW()
+			, up_user = #{up_user}
+			, up_ip = #{up_ip}
+		where user_id = #{user_id}
+	</update>
+
+</mapper>

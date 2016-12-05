@@ -1,0 +1,73 @@
+/*	내꼬 공통 CSS	공통	*/
+/* @import url{http://resources/fonts.googleapis.com/earlyacces/nanumgothic.css}; */
+
+
+@font-face {
+font-family:'Nanum Gothic';
+font-weight:400;
+src:url('/resources/font/NanumGothic.eot');
+src:url('/resources/font/NanumGothic.eot?#iefix') format('embedded-opentype'),
+url('/resources/font/NanumGothic.woff') format('woff'),
+url('/resources/font/NanumGothic.ttf') format('truetype'),
+url('/resources/font/NanumGothic.svg#NanumGothic') format('svg');
+src:local(※), url('/resources/font/NanumGothic.woff') format('woff');
+}
+
+@font-face {
+font-family:'Nanum GothicB';
+font-weight:700;
+src:url('/resources/font/NanumGothicBold.eot');
+src:url('/resources/font/NanumGothicBold.eot?#iefix') format('embedded-opentype'),
+url('/resources/font/NanumGothicBold.woff') format('woff'),
+url('/resources/font/NanumGothicBold.ttf') format('truetype'),
+url('/resources/font/NanumGothicBold.svg#NanumGothic') format('svg');
+src:local(※), url('/resources/font/NanumGothicBold.woff') format('woff');
+}
+
+@font-face {
+font-family:'Nanum GothicE';
+font-weight:700;
+src:url('/resources/font/NanumGothicExtraBold.eot');
+src:url('/resources/font/NanumGothicExtraBold.eot?#iefix') format('embedded-opentype'),
+url('/resources/font/NanumGothicExtraBold.woff') format('woff'),
+url('/resources/font/NanumGothicExtraBold.ttf') format('truetype'),
+url('/resources/font/NanumGothicExtraBold.svg#NanumGothic') format('svg');
+src:local(※), url('/resources/font/NanumGothicExtraBold.woff') format('woff');
+}
+
+* {font-family: 'Nanum Gothic', sans-serif;}
+
+
+
+
+/*
+
+ADMIN
+
+*/
+
+
+/*	favority 리스트 섬네일 이미지	*/
+.list-thumbnail {
+	max-height:60px; 
+	height: expression(this.height > 500 ? 500: true); 
+	width: auto;
+}
+
+
+/*	bPopup login_naver	*/
+#element_to_pop_up { 
+    background-color:#fff;
+    border-radius:15px;
+    color:#000;
+    display:none; 
+    padding:20px;
+    min-width:400px;
+    min-height: 180px;
+}
+.b-close{
+    cursor:pointer;
+    position:absolute;
+    right:10px;
+    top:5px;
+}

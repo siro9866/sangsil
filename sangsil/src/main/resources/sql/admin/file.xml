@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding= "UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+ 
+<mapper namespace= "admin.file">
+
+	<select id ="list" parameterType="com.mee.sangsil.dto.FileDto" resultType="com.mee.sangsil.dto.FileDto">
+		/* admin.file.list */
+		SELECT 
+			file_id,
+			board_id,
+			board_gbn,
+			path_name,
+			view_path_name,
+			originalFileName,
+			file_name,
+			file_size,
+			file_ext,
+			disp_order,
+			use_yn,
+			in_date,
+			in_user,
+			in_ip,
+			up_date,
+			up_user,
+			up_ip
+		FROM t_file
+		where use_yn = 'Y'
+		and board_id = #{board_id}
+		and board_gbn = #{board_gbn}
+		order by disp_order, originalFileName
+	</select>
+	
+	<insert id ="insert" parameterType="com.mee.sangsil.dto.FileDto">
+		/* admin.insertFile */
+		insert into t_file 
+			(
+			board_id 
+			, board_gbn 
+			, path_name
+			, view_path_name
+			, originalFileName 
+			, file_name 
+			, file_size 
+			, file_ext 
+			, in_date 
+			, in_user 
+			, in_ip 
+			, up_date 
+			, up_user 
+			, up_ip 
+			)
+			values
+			(
+			#{board_id} 
+			, #{board_gbn} 
+			, #{path_name} 
+			, #{view_path_name} 
+			, #{originalFileName} 
+			, #{file_name} 
+			, #{file_size} 
+			, #{file_ext} 
+			, NOW()
+			, #{in_user} 
+			, #{in_ip} 
+			, NOW()
+			, #{up_user} 
+			, #{up_ip} 
+			)
+	</insert>
+
+	
+	<update id="update" parameterType="com.mee.sangsil.dto.FileDto">
+		/* admin.file.update */
+		update t_file 
+			set
+			disp_order = #{disp_order}
+			, up_date = NOW()
+			, up_user = #{up_user}
+			, up_ip = #{up_ip}
+		where file_id = #{file_id}
+	</update>
+
+	<update id="delete" parameterType="com.mee.sangsil.dto.FileDto">
+		/* admin.file.delete */
+		update t_file 
+			set
+			use_yn = 'N'
+			, up_date = NOW()
+			, up_user = #{up_user}
+			, up_ip = #{up_ip}
+		where file_id = #{file_id}
+	</update>
+	
+</mapper>

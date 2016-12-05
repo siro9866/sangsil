@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding= "UTF-8" ?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd" >
+
+<configuration>
+	<mappers>
+
+		<!--  ADMIN -->	
+		<mapper resource ="/sql/admin/board.xml"/>
+		<mapper resource ="/sql/admin/favority.xml"/>
+		<mapper resource ="/sql/admin/cd.xml"/>
+		<mapper resource ="/sql/admin/file.xml"/>
+		<mapper resource ="/sql/admin/user.xml"/>
+
+		<!-- APP -->
+		<mapper resource ="/sql/app/board.xml"/>
+		<mapper resource ="/sql/app/file.xml"/>
+
+		<!--  FRONT -->	
+<!-- 		<mapper resource ="/sql/front/base.xml"/> -->
+		
+		<!-- COMMON -->
+		<mapper resource ="/sql/common/login.xml"/>
+		
+		<!-- SAMPLE -->
+		<mapper resource ="/sql/sample/sample.xml"/>
+		
+	</mappers>
+</configuration>

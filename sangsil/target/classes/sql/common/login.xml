@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding= "UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+ 
+<mapper namespace= "common.login">
+	
+	<!-- 로그인 회원 확인 포탈아이디-->
+	<select id ="login" parameterType="com.mee.sangsil.dto.UserDto" resultType="com.mee.sangsil.dto.UserDto">
+		/* common.login.login */
+		SELECT 
+			user_id
+			, login_gbn
+			, user_nm
+			, user_auth
+			, login_cnt
+			, login_date
+			, use_yn
+			, p_id
+			, p_pw
+			, p_email
+			, p_nickname
+			, p_age
+			, p_gender
+			, p_name
+			, p_birthday
+			, p_user_img
+			, in_date
+			, in_user
+			, in_ip
+			, up_date
+			, up_user
+			, up_ip
+		FROM t_user		
+		where login_gbn = trim(#{login_gbn})
+		and p_id = trim(#{p_id})
+		and use_yn = "Y"
+	</select>
+
+	<!-- 회원정보 등록 -->
+	<insert id ="insert_user" parameterType="com.mee.sangsil.dto.UserDto">
+		/* common.login.insert_user */
+		INSERT INTO t_user (
+			login_gbn
+			, login_date
+			, p_id
+			, p_email
+			, p_nickname
+			, p_age
+			, p_gender
+			, p_name
+			, p_birthday
+			, p_user_img
+			, in_date
+			, in_user
+			, in_ip
+			, up_date
+			, up_user
+			, up_ip
+			
+		) VALUES (
+			
+			#{login_gbn}
+			, NOW()
+			, #{p_id}
+			, #{p_email}
+			, #{p_nickname}
+			, #{p_age}
+			, #{p_gender}
+			, #{p_name}
+			, #{p_birthday}
+			, #{p_user_img}
+			, NOW()
+			, #{in_user}
+			, #{in_ip}
+			, NOW()
+			, #{up_user}
+			, #{up_ip}
+		)
+	</insert>
+
+	<!-- 로그인시 회원로그인 업데이트  -->
+	<update id ="update_login" parameterType="com.mee.sangsil.dto.UserDto">
+		/* common.login.update_login */
+		UPDATE t_user SET
+			login_cnt = login_cnt + 1
+			, login_date = NOW()
+		WHERE user_id = #{user_id}
+	</update>
+
+	<!-- 로그인 히스토리 적재 -->
+	<insert id ="insert_history" parameterType="com.mee.sangsil.dto.UserDto">
+		/* common.login.insert_history */
+		INSERT INTO t_login_history (
+			user_id
+			, login_gbn
+			, in_date
+			, in_user
+			, in_ip
+		) VALUES (
+			#{user_id }
+			, #{login_gbn }
+			, NOW()
+			, #{in_user }
+			, #{in_ip }
+		)
+	</insert>
+	
+	<!--이름 중복 사용 확인 -->
+	<select id ="loginInfo" parameterType="com.mee.sangsil.dto.UserDto" resultType="com.mee.sangsil.dto.UserDto">
+		/* common.login.loginInfo */
+		SELECT 
+			user_id
+			, login_gbn
+			, user_nm
+			, user_auth
+			, login_cnt
+			, login_date
+			, use_yn
+			, p_id
+			, p_email
+			, p_nickname
+			, p_age
+			, p_gender
+			, p_name
+			, p_birthday
+			, p_user_img
+			, in_date
+			, in_user
+			, in_ip
+			, up_date
+			, up_user
+			, up_ip
+		FROM t_user		
+		where user_nm = trim(#{user_nm})
+	</select>
+	
+	<!-- 이름 수정 -->
+	<update id ="update_user_nm" parameterType="com.mee.sangsil.dto.UserDto">
+		/* common.login.update_login */
+		UPDATE t_user SET
+			user_nm = trim(#{user_nm})
+			, up_date = NOW()
+			, up_user = #{up_user}
+			, up_ip = #{up_ip}
+		WHERE user_id = #{user_id}
+	</update>
+	
+</mapper>

@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding= "UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+ 
+<mapper namespace= "admin.favority">
+
+
+	<select id ="list" parameterType="com.mee.sangsil.dto.FavorityDto" resultType="com.mee.sangsil.dto.FavorityDto">
+		/* admin.favority.list */
+
+		select @i as totCnt, a.*
+		from
+		(
+			select
+				@i := @i + 1 as rowNum
+				, CEIL((@j := @j + 1)/#{pageSize}) as pageNum
+				, imsi.*
+			from(
+			
+						<include refid="listQuery"/>
+						
+						order by favority.favority_id desc
+						
+				) imsi, (select @i := 0, @j := 0) temp		
+		) a			
+		where pageNum = #{pageNum}
+	</select>
+	
+	
+	<sql id="listQuery">
+		/*	listQuery 리스트 쿼리	*/
+		select
+			favority.favority_id 
+			, favority.cd_id
+			, cd.cd_nm
+			, favority.favority_nm 
+			, favority.favority_url 
+			, favority.favority_img 
+			, favority.favority_cmt 
+			, favority.disp_order 
+			, favority.hit_cnt 
+			, favority.use_yn 
+			, favority.in_date 
+			, favority.in_user 
+			, favority.in_ip 
+			, favority.up_date 
+			, favority.up_user 
+			, favority.up_ip
+		from t_favority as favority left outer join t_cd as cd
+		on favority.cd_id =  cd.cd_id and cd.use_yn = 'Y'
+		where favority.use_yn = 'Y'
+		<if test="searchValue != null and searchValue != ''">
+		and (favority.favority_nm like CONCAT('%', #{searchValue}, '%') or favority.favority_url like CONCAT('%', #{searchValue}, '%') or cd.cd_nm like CONCAT('%', #{searchValue}, '%'))
+		</if>
+		
+	</sql>	
+	
+	
+	<select id ="detail" parameterType="com.mee.sangsil.dto.FavorityDto" resultType="com.mee.sangsil.dto.FavorityDto">
+		/* admin.favority.detail */
+		select 	
+			favority.favority_id, 
+			favority.cd_id,
+			cd.cd_nm,
+			favority.favority_nm, 
+			favority.favority_url, 
+			favority.favority_img, 
+			favority.favority_cmt, 
+			favority.disp_order, 
+			favority.hit_cnt, 
+			favority.use_yn, 
+			favority.in_date, 
+			favority.in_user, 
+			favority.in_ip, 
+			favority.up_date, 
+			favority.up_user, 
+			favority.up_ip
+		from t_favority as favority left outer join t_cd as cd
+		on favority.cd_id =  cd.cd_id and cd.use_yn = 'Y'
+		where favority.use_yn = 'Y'
+		and favority.favority_id = #{favority_id}
+	</select>
+	
+	<select id ="detailList" parameterType="com.mee.sangsil.dto.FavorityDto" resultType="com.mee.sangsil.dto.FavorityDto">
+		/* admin.favority.detail_pre */
+		<include refid="listQuery"/>
+		
+			and favority.favority_id &lt; #{favority_id} + 3 
+			and favority.favority_id &gt; #{favority_id} - 3
+			
+			order by favority.favority_id desc
+	</select>
+	
+	
+	<select id ="autoSeq" resultType="String" parameterType="HashMap">
+		/* favority.autoSeq */
+		SELECT AUTO_INCREMENT FROM INFORMATION_SCHEMA.TABLES
+		 WHERE TABLE_SCHEMA = #{tableSC}
+		 AND TABLE_NAME = #{tableNM}
+	</select>
+	
+	<insert id ="insert" parameterType="com.mee.sangsil.dto.FavorityDto">
+		/* admin.favority.insert */
+		insert into t_favority( 
+			cd_id
+			, favority_nm
+			, favority_url
+			, favority_img
+			, favority_cmt
+			, disp_order
+			, in_date
+			, in_user
+			, in_ip 
+		) values ( 
+			#{cd_id}
+			, #{favority_nm}
+			, #{favority_url}
+			, #{favority_img}
+			, #{favority_cmt}
+			, #{disp_order}
+			, NOW()
+			, #{in_user}
+			, #{in_ip}
+			)
+	</insert>
+	
+	<update id="update" parameterType="com.mee.sangsil.dto.FavorityDto">
+		/* admin.favority.update */
+		update t_favority 
+			set
+			cd_id = #{cd_id}
+			, favority_nm = #{favority_nm}
+			, favority_url = #{favority_url}
+			<if test="favority_img != null and favority_img != ''">
+			, favority_img = #{favority_img}
+			</if>
+			<if test="favority_cmt != null and favority_cmt != ''">
+			, favority_cmt = #{favority_cmt}
+			</if>
+			<if test="disp_order != null and disp_order != ''">
+			, disp_order = #{disp_order}
+			</if>
+			, up_date = NOW()
+			, up_user = #{up_user}
+			, up_ip = #{up_ip}
+		where favority_id = #{favority_id}
+	</update>
+
+	<update id="delete" parameterType="com.mee.sangsil.dto.FavorityDto">
+		/* admin.favority.delete */
+		update t_favority 
+			set
+			use_yn = 'N'
+			, up_date = NOW()
+			, up_user = #{up_user}
+			, up_ip = #{up_ip}
+		where favority_id = #{favority_id}
+	</update>
+	
+</mapper>

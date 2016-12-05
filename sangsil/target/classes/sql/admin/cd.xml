@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding= "UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+ 
+<mapper namespace= "admin.cd">
+
+<!-- S:상위코드  -->
+
+	<select id ="list" parameterType="com.mee.sangsil.dto.CdDto" resultType="com.mee.sangsil.dto.CdDto">
+		/* admin.cd.list */
+
+		select @i as totCnt, a.*
+		from
+		(
+			select
+				@i := @i + 1 as rowNum
+				, CEIL((@j := @j + 1)/#{pageSize}) as pageNum
+				, imsi.*
+			from(
+			
+						<include refid="listQuery"/>
+						
+				) imsi, (select @i := 0, @j := 0) temp		
+		) a			
+		where pageNum = #{pageNum}
+		order by cd_id
+	</select>
+	
+	<sql id="listQuery">
+		/*	listQuery 리스트 쿼리	*/
+		select 	
+			cd.auto_id, 
+			cd.cd_id, 
+			cd.high_cd_id, 
+			cd.cd_nm, 
+			cd.cd_cmt, 
+			cd.cd_type,
+			(select cd_nm from t_cd where cd_id = cd.cd_type) cd_type_nm,
+			cd.disp_order, 
+			cd.use_yn, 
+			cd.in_date, 
+			cd.in_user, 
+			cd.in_ip, 
+			cd.up_date, 
+			cd.up_user, 
+			cd.up_ip
+		from t_cd cd
+		where cd.high_cd_id is null 
+		and cd.use_yn = 'Y'
+		<if test="searchValue != null and searchValue != ''">
+		and (cd.cd_id like CONCAT('%', #{searchValue}, '%') or cd.cd_nm like CONCAT('%', #{searchValue}, '%'))
+		</if>
+		
+	</sql>		
+	
+	<select id ="detail" parameterType="com.mee.sangsil.dto.CdDto" resultType="com.mee.sangsil.dto.CdDto">
+		/* admin.cd.detail */
+		select 	
+			cd.auto_id, 
+			cd.cd_id, 
+			cd.high_cd_id, 
+			cd.cd_nm, 
+			cd.cd_cmt, 
+			cd.cd_type,
+			(select cd_nm from t_cd where cd_id = cd.cd_type) cd_type_nm,
+			cd.disp_order, 
+			cd.use_yn, 
+			cd.in_date, 
+			cd.in_user, 
+			cd.in_ip, 
+			cd.up_date, 
+			cd.up_user, 
+			cd.up_ip
+		from t_cd cd
+		where cd.auto_id = #{auto_id}
+		and cd.use_yn = 'Y'
+	</select>
+	
+	<insert id ="insert" parameterType="com.mee.sangsil.dto.CdDto">
+		/* admin.cd.insert */
+		insert into t_cd( 
+			cd_id
+			, high_cd_id
+			, cd_nm
+			, cd_cmt
+			, cd_type
+			, disp_order
+			, in_date
+			, in_user
+			, in_ip 
+			, up_date
+			, up_user
+			, up_ip 
+		) values ( 
+			UPPER(trim(#{cd_id}))
+			, UPPER(trim(#{high_cd_id}))
+			, trim(#{cd_nm})
+			, #{cd_cmt}
+			, #{cd_type}
+			, trim(#{disp_order})
+			, NOW()
+			, #{in_user}
+			, #{in_ip}
+			, NOW()
+			, #{up_user}
+			, #{up_ip}
+			)
+	</insert>
+	
+	<update id="update" parameterType="com.mee.sangsil.dto.CdDto">
+		/* admin.cd.update */
+		update t_cd 
+			set
+			cd_id = UPPER(trim(#{cd_id}))
+			<if test="high_cd_id != null and high_cd_id != ''">
+			, high_cd_id = UPPER(trim(#{high_cd_id}))
+			</if>
+			, cd_nm = trim(#{cd_nm})
+			, cd_cmt = #{cd_cmt}
+			, cd_type = #{cd_type}
+			, disp_order = trim(#{disp_order})
+			, use_yn = #{use_yn}
+			, up_date = NOW()
+			, up_user = #{up_user}
+			, up_ip = #{up_ip}
+		where auto_id = #{auto_id}
+	</update>
+
+	<update id="delete" parameterType="com.mee.sangsil.dto.CdDto">
+		/* admin.cd.delete */
+		update t_cd 
+			set
+			use_yn = 'N'
+			, up_date = NOW()
+			, up_user = #{up_user}
+			, up_ip = #{up_ip}
+		where auto_id = #{auto_id}
+	</update>
+
+	<update id="deleteSubList" parameterType="com.mee.sangsil.dto.CdDto">
+		/* admin.cd.delete */
+		update t_cd 
+			set
+			use_yn = 'N'
+			, up_date = NOW()
+			, up_user = #{up_user}
+			, up_ip = #{up_ip}
+		where high_cd_id = #{high_cd_id}
+	</update>
+
+	<select id ="cdDupleChk" parameterType="com.mee.sangsil.dto.CdDto" resultType="com.mee.sangsil.dto.CdDto">
+		/* admin.cd.cdDupleChk	cd_id 중복체크 */
+		select 	
+			cd.auto_id, 
+			cd.cd_id, 
+			cd.high_cd_id, 
+			cd.cd_nm, 
+			cd.cd_cmt, 
+			cd.cd_type, 
+			cd.disp_order, 
+			cd.use_yn, 
+			cd.in_date, 
+			cd.in_user, 
+			cd.in_ip, 
+			cd.up_date, 
+			cd.up_user, 
+			cd.up_ip
+		from t_cd cd
+		where cd.cd_id = UPPER(#{cd_id})
+	</select>
+	
+<!-- E:상위코드 -->
+	
+	
+	
+<!-- S:하위코드  -->
+	
+	<!-- 공통코드관리 상세 -->
+	<select id ="detailSubList" parameterType="com.mee.sangsil.dto.CdDto" resultType="com.mee.sangsil.dto.CdDto">
+		/* admin.cd.detailSubList */
+		select 	
+			cd.auto_id, 
+			cd.cd_id, 
+			cd.high_cd_id, 
+			cd.cd_nm, 
+			cd.cd_cmt, 
+			cd.cd_type,
+			(select cd_nm from t_cd where cd_id = cd.cd_type) cd_type_nm,
+			cd.disp_order, 
+			cd.use_yn, 
+			cd.in_date, 
+			cd.in_user, 
+			cd.in_ip, 
+			cd.up_date, 
+			cd.up_user, 
+			cd.up_ip
+		from t_cd cd, t_cd cd2
+		where cd.high_cd_id = cd2.cd_id
+		and cd2.auto_id = #{auto_id}
+		/*	and cd.use_yn = 'Y'	*/
+		order by cd.disp_order, cd.cd_id
+	</select>		
+	
+	<!-- 페이지공통 -->
+	<select id ="detailList" parameterType="com.mee.sangsil.dto.CdDto" resultType="com.mee.sangsil.dto.CdDto">
+		/* admin.cd.detailList */
+		select 	
+			cd.auto_id, 
+			cd.cd_id, 
+			cd.high_cd_id, 
+			cd.cd_nm, 
+			cd.cd_cmt, 
+			cd.cd_type,
+			cd.disp_order, 
+			cd.use_yn, 
+			cd.in_date, 
+			cd.in_user, 
+			cd.in_ip, 
+			cd.up_date, 
+			cd.up_user, 
+			cd.up_ip
+		from t_cd cd
+		where cd.high_cd_id = #{cd_id}
+		/*	and cd.use_yn = 'Y'	*/
+		order by cd.disp_order, cd.auto_id
+	</select>	
+	
+<!-- E:하위코드  -->
+	
+</mapper>

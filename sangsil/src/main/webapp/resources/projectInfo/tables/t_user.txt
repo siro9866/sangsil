@@ -1,0 +1,31 @@
+drop table t_user;
+
+		
+
+
+CREATE TABLE `t_user` (				
+		`user_id` int(10) NOT NULL AUTO_INCREMENT COMMENT '아이디',
+		`login_gbn` varchar(50) NOT NULL COMMENT '로그인아이디구분',
+		`user_nm` varchar(50) DEFAULT NULL,
+		`user_auth` varchar(10) DEFAULT 'AAA10'      COMMENT '권한',
+		`login_cnt` int(10) DEFAULT 0			COMMENT '로그인 카운트',
+		`login_date` datetime DEFAULT NULL	COMMENT '최근 로그인 날짜',
+		`use_yn` char(1) DEFAULT 'Y', 
+		`p_id` varchar(50) NULL COMMENT '아이디',
+		`p_pw` VARCHAR(20) NULL COMMENT 'pw',
+		`p_email` varchar(50) DEFAULT NULL COMMENT '이메일',
+		`p_nickname` varchar(50) DEFAULT NULL COMMENT '닉네임',
+		`p_age` varchar(50) DEFAULT NULL COMMENT '연령',
+		`p_gender` varchar(50) DEFAULT NULL COMMENT '성별',
+		`p_name` varchar(50) DEFAULT NULL COMMENT '이름',
+		`p_birthday` varchar(50) DEFAULT NULL COMMENT '생일',	
+		`p_user_img` varchar(100) DEFAULT NULL,
+		`in_date` datetime DEFAULT NULL,
+		`in_user` varchar(50) DEFAULT NULL, 
+		`in_ip` varchar(20) DEFAULT NULL,
+		`up_date` datetime DEFAULT NULL,
+		`up_user` varchar(50) DEFAULT NULL, 
+		`up_ip` varchar(20) DEFAULT NULL,
+		PRIMARY KEY (`user_id`)
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+        
