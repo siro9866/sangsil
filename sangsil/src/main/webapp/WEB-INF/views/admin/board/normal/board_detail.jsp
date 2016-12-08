@@ -155,11 +155,15 @@ $(function(){
 										<th class="col-lg-2">첨부파일</th>
 										<td>
 											<c:choose>
-												<c:when test="${empty result.file_id }">
+												<c:when test="${empty fileList }">
 													첨부파일이 없습니다
 												</c:when>
 												<c:otherwise>
-													<a href="/fileDownload.mee?path=${result.path_name}&fileName=${result.file_name}&originalFileName=${result.originalFileName}"><c:out value="${result.originalFileName }" />(<c:out value="${result.file_size }" /> byte)</a>
+												
+													<c:forEach items="${fileList }" var="result">
+														<a href="/fileDownload.mee?path=${result.path_name}&fileName=${result.file_name}&originalFileName=${result.originalFileName}"><c:out value="${result.originalFileName }" />(<c:out value="${result.file_size }" /> byte)</a> <br>
+													</c:forEach>
+													
 												</c:otherwise>
 											</c:choose>
 										</td>
