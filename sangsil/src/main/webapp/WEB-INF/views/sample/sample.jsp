@@ -1,20 +1,9 @@
-<html>
-<head>
-<meta charset="utf-8" />
-	<title>SAMPLE</title>
-	
-	
-<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js" type="text/javascript" language="javascript"></script>
-	
-<script>
+<%@ page language= "java" contentType ="text/html; charset=UTF-8" pageEncoding ="UTF-8"%>
 
-$(function(){
-	$("ul li").on("click", function(){
-		location.href = $(this).attr("id");
-	});
-});
-
-</script>
+<%@ include file="/WEB-INF/views/common/taglibs.jsp" %>
+<c:import url="/include.mee?fileName=/admin/include/doctype"/>
+<c:import url="/include.mee?fileName=/admin/include/style"/>
+<c:import url="/include.mee?fileName=/admin/include/script"/>
 
 <style>
 	
@@ -26,13 +15,15 @@ $(function(){
 		background-color: black;
 	}
 	
-	#wrapper ul{margin: 100px;	padding:20px;	border: 5px dotted red;}
+	#wrapper ul{margin: 30px;	padding:5px;	border: 5px dotted red;}
 	#wrapper ul li{list-style-type: circle; margin-bottom: 10px;}
 	
 </style>
 
 </head>
+
 <body>
+
 
 	<div id="wrapper">
 		<ul>
@@ -56,5 +47,14 @@ $(function(){
 		
 	</div>
 
+<script>
+
+	$("ul li").on("click", function(){
+		window.open($(this).attr("id"));
+	});
+
+</script>
+
 </body>
+
 </html>

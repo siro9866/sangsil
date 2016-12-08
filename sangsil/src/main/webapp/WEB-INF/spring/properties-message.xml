@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd" >
+<properties>
+
+	<comment>프로퍼티-메세지</comment>
+
+	<entry key="LOGIN">로그인</entry>
+	<entry key="ID">아이디</entry>
+	<entry key="PASSWORD">비밀번호</entry>
+	
+</properties>

@@ -32,6 +32,7 @@
 	
 	<!-- properties.xml -->
 	<util:properties id="config" location="/WEB-INF/spring/properties.xml"></util:properties>	
+	<util:properties id="message" location="/WEB-INF/spring/properties-message.xml"></util:properties>	
 	
 	<!-- JSON -->
 	<beans:bean id="jsonView" class="net.sf.json.spring.web.servlet.view.JsonView">

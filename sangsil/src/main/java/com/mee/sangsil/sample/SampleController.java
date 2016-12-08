@@ -12,6 +12,7 @@ import org.json.simple.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,6 +20,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.mee.sangsil.common.CommonFunction;
+import com.mee.sangsil.common.DateUtil;
+import com.mee.sangsil.common.StringUtil;
 import com.mee.sangsil.common.exception.CommonCheckedException;
 import com.mee.sangsil.common.exception.CommonErrorCode;
 import com.mee.sangsil.dto.BoardDto;
@@ -32,6 +35,18 @@ public class SampleController {
 	@Autowired
 	private SampleService sampleService;
 
+	@Value("#{message['LOGIN']}") String m_login;
+	@Value("#{message['ID']}") String m_id;
+	@Value("#{message['PASSWORD']}") String m_password;
+	
+	
+	@RequestMapping(value = "/sample")
+	public ModelAndView sample(HttpServletRequest request) {
+		ModelAndView mav = new ModelAndView("/sample/sample");
+		return mav;
+	}
+	
+	
 	/**
 	 * 유투브 바로보기
 	 * 
@@ -137,12 +152,9 @@ public class SampleController {
 				logger.info("CommonFunction.isNotEmpty:" + CommonFunction.isNotEmpty(resultList.get(i).get("up_date")));
 				logger.info("CommonFunction.isNull:" + CommonFunction.isNull(resultList.get(i).get("up_date")));
 				logger.info("CommonFunction.isNotNull:" + CommonFunction.isNotNull(resultList.get(i).get("up_date")));
-				logger.info("CommonFunction.default2String:"
-						+ CommonFunction.default2String(CommonFunction.stringValueOf(resultList.get(i).get("up_date")),
-								CommonFunction.getToday("yyyy-MM-dd HH:mm:ss")));
-				logger.info("CommonFunction.getPriceAMT:" + CommonFunction
-						.getPriceAMT(CommonFunction.stringValueOf(resultList.get(i).get("disp_order")), "빵원"));
-				logger.info("CommonFunction.getToday:" + CommonFunction.getToday("yyyy-MM-dd HH:mm:ss"));
+				logger.info("CommonFunction.default2String:" + StringUtil.default2String(StringUtil.stringValueOf(resultList.get(i).get("up_date")), DateUtil.getToday("yyyy-MM-dd HH:mm:ss")));
+				logger.info("CommonFunction.getPriceAMT:" + StringUtil.getPriceAMT(StringUtil.stringValueOf(resultList.get(i).get("disp_order")), "빵원"));
+				logger.info("CommonFunction.getToday:" + DateUtil.getToday("yyyy-MM-dd HH:mm:ss"));
 				logger.info("※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※");
 				logger.info("※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※");
 
@@ -150,8 +162,7 @@ public class SampleController {
 				// resultList.get(i).put("up_date",
 				// CommonFunction.default2String(CommonFunction.stringValueOf(resultList.get(i).get("up_date")),
 				// CommonFunction.getToday("yyyy-MM-dd HH:mm:ss")));
-				resultList.get(i).put("disp_order1", CommonFunction
-						.getPriceAMT(CommonFunction.stringValueOf(resultList.get(i).get("disp_order")), "빵원"));
+				resultList.get(i).put("disp_order1", StringUtil.getPriceAMT(StringUtil.stringValueOf(resultList.get(i).get("disp_order")), "빵원"));
 
 			}
 
@@ -195,12 +206,20 @@ public class SampleController {
 
 		try {
 			
+			// 각종 익셉션 처리
 			if (paramMap.get("loginId") == null || paramMap.get("loginId").trim().isEmpty()){
 				resulMap = setResultJson(CommonErrorCode.ERR_0001, "로그인-ID");
-				throw new CommonCheckedException(CommonErrorCode.ERR_0001, "로그인 ID");
+				throw new CommonCheckedException(CommonErrorCode.ERR_0001, m_login+"-"+m_id);
+			}else if(paramMap.get("userPw") == null || paramMap.get("userPw").trim().isEmpty()){
+				resulMap = setResultJson(CommonErrorCode.ERR_0001, "로그인-PW");
+				throw new CommonCheckedException(CommonErrorCode.ERR_0001, m_login+"-"+m_password);
+			}else if(!paramMap.get("loginId").equals(paramMap.get("userPw"))){
+				resulMap = setResultJson(CommonErrorCode.ERR_0003, "로그인-PW");
+				throw new CommonCheckedException(CommonErrorCode.ERR_0003, m_login+"-"+m_id);
+			}else{
+				resultList = sampleService.list("sample.list", paramMap);
 			}
 
-			resultList = sampleService.list("sample.list", paramMap);
 			for (int i = 0; i < resultList.size(); i++) {
 				logger.info(resultList.get(i).get("favority_nm"));
 				logger.info("※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※");
@@ -210,11 +229,11 @@ public class SampleController {
 				logger.info("CommonFunction.isNull:" + CommonFunction.isNull(resultList.get(i).get("up_date")));
 				logger.info("CommonFunction.isNotNull:" + CommonFunction.isNotNull(resultList.get(i).get("up_date")));
 				logger.info("CommonFunction.default2String:"
-						+ CommonFunction.default2String(CommonFunction.stringValueOf(resultList.get(i).get("up_date")),
-								CommonFunction.getToday("yyyy-MM-dd HH:mm:ss")));
-				logger.info("CommonFunction.getPriceAMT:" + CommonFunction
-						.getPriceAMT(CommonFunction.stringValueOf(resultList.get(i).get("disp_order")), "빵원"));
-				logger.info("CommonFunction.getToday:" + CommonFunction.getToday("yyyy-MM-dd HH:mm:ss"));
+						+ StringUtil.default2String(StringUtil.stringValueOf(resultList.get(i).get("up_date")),
+								DateUtil.getToday("yyyy-MM-dd HH:mm:ss")));
+				logger.info("CommonFunction.getPriceAMT:" + StringUtil
+						.getPriceAMT(StringUtil.stringValueOf(resultList.get(i).get("disp_order")), "빵원"));
+				logger.info("CommonFunction.getToday:" + DateUtil.getToday("yyyy-MM-dd HH:mm:ss"));
 				logger.info("※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※");
 				logger.info("※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※※");
 
@@ -222,8 +241,8 @@ public class SampleController {
 				// resultList.get(i).put("up_date",
 				// CommonFunction.default2String(CommonFunction.stringValueOf(resultList.get(i).get("up_date")),
 				// CommonFunction.getToday("yyyy-MM-dd HH:mm:ss")));
-				resultList.get(i).put("disp_order1", CommonFunction
-						.getPriceAMT(CommonFunction.stringValueOf(resultList.get(i).get("disp_order")), "빵원"));
+				resultList.get(i).put("disp_order1", StringUtil
+						.getPriceAMT(StringUtil.stringValueOf(resultList.get(i).get("disp_order")), "빵원"));
 
 			}
 
