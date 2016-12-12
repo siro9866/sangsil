@@ -247,8 +247,8 @@ public class SampleController {
 			}
 
 		} catch (Exception e) {
-			logger.info("Exception:" + e.toString());
-			e.printStackTrace();
+			logger.info("\n\nException:" + e.toString() +"\n");
+//			e.printStackTrace();
 		}
 //		resulMap = setResultJson(CommonErrorCode.ERR_0000, "");
 		json.put("paramMap", paramMap);
