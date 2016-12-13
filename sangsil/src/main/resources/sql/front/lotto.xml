@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding= "UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+ 
+<mapper namespace= "front.lotto">
+
+
+	<select id ="list" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+		/* front.lotto.list */
+
+		select @i as totCnt, a.*
+		from
+		(
+			select
+				@i := @i + 1 as rowNum
+				, CEIL((@j := @j + 1)/#{pageSize}) as pageNum
+				, imsi.*
+			from(
+			
+						<include refid="listQuery"/>
+						
+						order by lotto.lotto_cnt desc
+						
+				) imsi, (select @i := 0, @j := 0) temp		
+		) a			
+		where pageNum = #{pageNum}
+	</select>
+	
+	
+	<sql id="listQuery">
+		/* listQuery 리스트 쿼리 */
+		SELECT lotto.lotto_id
+			, lotto.lotto_cnt
+			, lotto.lotto_date
+			, lotto.lotto_dang1_cnt
+			, lotto.lotto_dang1_amt
+			, lotto.lotto_dang2_cnt
+			, lotto.lotto_dang2_amt
+			, lotto.lotto_dang3_cnt
+			, lotto.lotto_dang3_amt
+			, lotto.lotto_dang4_cnt
+			, lotto.lotto_dang4_amt
+			, lotto.lotto_dang5_cnt
+			, lotto.lotto_dang5_amt
+			, lotto.lotto_dang_num1
+			, lotto.lotto_dang_num2
+			, lotto.lotto_dang_num3
+			, lotto.lotto_dang_num4
+			, lotto.lotto_dang_num5
+			, lotto.lotto_dang_num6
+			, lotto.lotto_dang_num9
+		FROM t_lotto as lotto
+		where 1=1
+		
+		<!-- 전체 리스트 -->
+		<if test="searchValue != null and searchValue != ''">
+			and lotto.lotto_cnt = #{searchValue}
+		</if>
+		
+	</sql>	
+	
+	
+	<select id="listDang" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+		/* listDangQuery 리스트 쿼리 */
+		
+		SELECT lotto.lotto_id
+			, lotto.lotto_cnt
+			, lotto.lotto_date
+			, lotto.lotto_dang1_cnt
+			, lotto.lotto_dang1_amt
+			, lotto.lotto_dang2_cnt
+			, lotto.lotto_dang2_amt
+			, lotto.lotto_dang3_cnt
+			, lotto.lotto_dang3_amt
+			, lotto.lotto_dang4_cnt
+			, lotto.lotto_dang4_amt
+			, lotto.lotto_dang5_cnt
+			, lotto.lotto_dang5_amt
+			, lotto.lotto_dang_num1
+			, lotto.lotto_dang_num2
+			, lotto.lotto_dang_num3
+			, lotto.lotto_dang_num4
+			, lotto.lotto_dang_num5
+			, lotto.lotto_dang_num6
+			, lotto.lotto_dang_num9
+			, lottodDang.lotto_dang_num1_yn
+			, lottodDang.lotto_dang_num2_yn
+			, lottodDang.lotto_dang_num3_yn
+			, lottodDang.lotto_dang_num4_yn
+			, lottodDang.lotto_dang_num5_yn
+			, lottodDang.lotto_dang_num6_yn
+			, lottodDang.lotto_dang_cnt
+		FROM t_lotto as lotto	left join
+		(	
+			SELECT lotto_id
+			, MAX(lotto_dang_num1_yn) lotto_dang_num1_yn
+			, MAX(lotto_dang_num2_yn) lotto_dang_num2_yn
+			, MAX(lotto_dang_num3_yn) lotto_dang_num3_yn
+			, MAX(lotto_dang_num4_yn) lotto_dang_num4_yn
+			, MAX(lotto_dang_num5_yn) lotto_dang_num5_yn
+			, MAX(lotto_dang_num6_yn) lotto_dang_num6_yn
+			, (MAX(lotto_dang_num1_yn) + MAX(lotto_dang_num2_yn) + MAX(lotto_dang_num3_yn) + MAX(lotto_dang_num4_yn) + MAX(lotto_dang_num5_yn) + MAX(lotto_dang_num6_yn)) lotto_dang_cnt
+			FROM (
+				/* 1번*/
+				SELECT lotto_id, 1 lotto_dang_num1_yn , 0 lotto_dang_num2_yn , 0 lotto_dang_num3_yn , 0 lotto_dang_num4_yn , 0 lotto_dang_num5_yn , 0 lotto_dang_num6_yn
+				FROM t_lotto
+				where 1=1
+				and 
+				(
+					lotto_dang_num1 = #{lotto_dang_num1} or lotto_dang_num2 = #{lotto_dang_num1} or lotto_dang_num3 = #{lotto_dang_num1} or lotto_dang_num4 = #{lotto_dang_num1} or lotto_dang_num5 = #{lotto_dang_num1} or lotto_dang_num6 = #{lotto_dang_num1}
+				)
+				union all
+				/* 2번*/
+				SELECT lotto_id, 0 lotto_dang_num1_yn , 1 lotto_dang_num2_yn , 0 lotto_dang_num3_yn , 0 lotto_dang_num4_yn , 0 lotto_dang_num5_yn , 0 lotto_dang_num6_yn
+				FROM t_lotto
+				where 1=1
+				and 
+				(
+					lotto_dang_num1 = #{lotto_dang_num2} or lotto_dang_num2 = #{lotto_dang_num2} or lotto_dang_num3 = #{lotto_dang_num2} or lotto_dang_num4 = #{lotto_dang_num2} or lotto_dang_num5 = #{lotto_dang_num2} or lotto_dang_num6 = #{lotto_dang_num2}
+				)
+				union all
+				/* 3번*/
+				SELECT lotto_id, 0 lotto_dang_num1_yn , 0 lotto_dang_num2_yn , 1 lotto_dang_num3_yn , 0 lotto_dang_num4_yn , 0 lotto_dang_num5_yn , 0 lotto_dang_num6_yn
+				FROM t_lotto
+				where 1=1
+				and 
+				(
+					lotto_dang_num1 = #{lotto_dang_num3} or lotto_dang_num2 = #{lotto_dang_num3} or lotto_dang_num3 = #{lotto_dang_num3} or lotto_dang_num4 = #{lotto_dang_num3} or lotto_dang_num5 = #{lotto_dang_num3} or lotto_dang_num6 = #{lotto_dang_num3}
+				)
+				union all
+				/* 4번*/
+				SELECT lotto_id, 0 lotto_dang_num1_yn , 0 lotto_dang_num2_yn , 0 lotto_dang_num3_yn , 1 lotto_dang_num4_yn , 0 lotto_dang_num5_yn , 0 lotto_dang_num6_yn
+				FROM t_lotto
+				where 1=1
+				and 
+				(
+					lotto_dang_num1 = #{lotto_dang_num4} or lotto_dang_num2 = #{lotto_dang_num4} or lotto_dang_num3 = #{lotto_dang_num4} or lotto_dang_num4 = #{lotto_dang_num4} or lotto_dang_num5 = #{lotto_dang_num4} or lotto_dang_num6 = #{lotto_dang_num4}
+				)
+				union all
+				/* 5번*/
+				SELECT lotto_id, 0 lotto_dang_num1_yn , 0 lotto_dang_num2_yn , 0 lotto_dang_num3_yn , 0 lotto_dang_num4_yn , 1 lotto_dang_num5_yn , 0 lotto_dang_num6_yn
+				FROM t_lotto
+				where 1=1
+				and 
+				(
+					lotto_dang_num1 = #{lotto_dang_num5} or lotto_dang_num2 = #{lotto_dang_num5} or lotto_dang_num3 = #{lotto_dang_num5} or lotto_dang_num4 = #{lotto_dang_num5} or lotto_dang_num5 = #{lotto_dang_num5} or lotto_dang_num6 = #{lotto_dang_num5}
+				)
+				union all
+				/* 6번*/
+				SELECT lotto_id, 0 lotto_dang_num1_yn , 0 lotto_dang_num2_yn , 0 lotto_dang_num3_yn , 0 lotto_dang_num4_yn , 0 lotto_dang_num5_yn , 1 lotto_dang_num6_yn
+				FROM t_lotto
+				where 1=1
+				and 
+				(
+					lotto_dang_num1 = #{lotto_dang_num6} or lotto_dang_num2 = #{lotto_dang_num6} or lotto_dang_num3 = #{lotto_dang_num6} or lotto_dang_num4 = #{lotto_dang_num6} or lotto_dang_num5 = #{lotto_dang_num6} or lotto_dang_num6 = #{lotto_dang_num6}
+				)
+			) imsi
+			GROUP BY lotto_id
+		) as lottodDang
+		on lotto.lotto_id = lottodDang.lotto_id
+		where lottodDang.lotto_dang_cnt &gt; 2
+		order by lottodDang.lotto_dang_cnt desc, lotto.lotto_cnt desc
+	</select>	
+	
+	
+</mapper>

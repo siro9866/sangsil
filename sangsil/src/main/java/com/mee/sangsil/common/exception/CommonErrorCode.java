@@ -9,7 +9,9 @@ public enum CommonErrorCode implements CommonErrorCodable {
 	/** %1은(는) 존재하지 않습니다. */
 	ERR_0002("ERR_0002", "FAIL", "%1이(가) 존재하지 않습니다."),
 	/** %1이(가) 불일치합니다. */
-	ERR_0003("ERR_0003", "FAIL", "%1이(가) 불일치합니다.");
+	ERR_0003("ERR_0003", "FAIL", "%1이(가) 불일치합니다."),
+	
+	ERR_9999("ERR_9999", "FAIL", "실패");
 
 	private String errCode;
 	private String errName;

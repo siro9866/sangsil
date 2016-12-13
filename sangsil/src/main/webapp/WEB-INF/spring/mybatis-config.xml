@@ -16,6 +16,7 @@
 		<mapper resource ="/sql/app/file.xml"/>
 
 		<!--  FRONT -->	
+		<mapper resource ="/sql/front/lotto.xml"/>
 <!-- 		<mapper resource ="/sql/front/base.xml"/> -->
 		
 		<!-- COMMON -->
