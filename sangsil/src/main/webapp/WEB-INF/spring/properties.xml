@@ -48,8 +48,11 @@
 	<entry key="FILEDELETEPATH_BOARD">delete</entry>
 	
 	<!-- 페이징 -->
-	<entry key="pageSize">2</entry>
-	<entry key="blockSize">3</entry>	
+	<entry key="PAGENUM">1</entry>
+	<entry key="PAGESIZE_10">10</entry>
+	<entry key="PAGESIZE_20">20</entry>
+	<entry key="BLOCKSIZE_10">10</entry>	
+	<entry key="BLOCKSIZE_20">20</entry>	
 	
 	<!-- 공통코드 아이디 -->
 	<!-- 회원권한 구분 -->
@@ -82,5 +85,8 @@
 	<entry key="CD_ID_CBC">CBC</entry>
 	<!-- 이미지 게시판 태그 -->
 	<entry key="CD_ID_DAC">DAC</entry>
+	
+	<!-- 로또당첨번호가져오기 -->
+	<entry key="GETLOTTONUMBER_URL">http://www.nlotto.co.kr/common.do?method=getLottoNumber</entry>
 	
 </properties>

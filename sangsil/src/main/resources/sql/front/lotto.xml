@@ -18,11 +18,30 @@
 			
 						<include refid="listQuery"/>
 						
-						order by lotto.lotto_cnt desc
+				) imsi, (select @i := 0, @j := 0) temp		
+		) a			
+		where pageNum = #{pageNum}
+		order by a.lotto_cnt desc
+	</select>
+
+	<select id ="listDang" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+		/* front.lotto.list */
+
+		select @i as totCnt, a.*
+		from
+		(
+			select
+				@i := @i + 1 as rowNum
+				, CEIL((@j := @j + 1)/#{pageSize}) as pageNum
+				, imsi.*
+			from(
+			
+						<include refid="listDangQuery"/>
 						
 				) imsi, (select @i := 0, @j := 0) temp		
 		) a			
 		where pageNum = #{pageNum}
+		order by a.lotto_dang_cnt desc, a.lotto_cnt desc
 	</select>
 	
 	
@@ -55,11 +74,11 @@
 		<if test="searchValue != null and searchValue != ''">
 			and lotto.lotto_cnt = #{searchValue}
 		</if>
-		
+		order by lotto.lotto_cnt desc
 	</sql>	
 	
 	
-	<select id="listDang" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+	<sql id="listDangQuery">
 		/* listDangQuery 리스트 쿼리 */
 		
 		SELECT lotto.lotto_id
@@ -159,7 +178,79 @@
 		on lotto.lotto_id = lottodDang.lotto_id
 		where lottodDang.lotto_dang_cnt &gt; 2
 		order by lottodDang.lotto_dang_cnt desc, lotto.lotto_cnt desc
-	</select>	
+	</sql>	
+	
+	
+	<!-- Detail -->
+	<select id ="detail" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+		/* front.lotto.detail */
+
+		SELECT lotto.lotto_id
+			, lotto.lotto_cnt
+			, lotto.lotto_date
+			, lotto.lotto_dang1_cnt
+			, lotto.lotto_dang1_amt
+			, lotto.lotto_dang2_cnt
+			, lotto.lotto_dang2_amt
+			, lotto.lotto_dang3_cnt
+			, lotto.lotto_dang3_amt
+			, lotto.lotto_dang4_cnt
+			, lotto.lotto_dang4_amt
+			, lotto.lotto_dang5_cnt
+			, lotto.lotto_dang5_amt
+			, lotto.lotto_dang_num1
+			, lotto.lotto_dang_num2
+			, lotto.lotto_dang_num3
+			, lotto.lotto_dang_num4
+			, lotto.lotto_dang_num5
+			, lotto.lotto_dang_num6
+			, lotto.lotto_dang_num9
+		FROM t_lotto as lotto
+		where lotto.lotto_cnt = #{lotto_cnt}
+		limit 1
+	</select>
+	
+	<insert id="insert" parameterType="java.util.HashMap">
+		INSERT INTO t_lotto(
+			lotto_cnt
+			, lotto_date
+			, lotto_dang1_cnt
+			, lotto_dang1_amt
+			, lotto_dang_num1
+			, lotto_dang_num2
+			, lotto_dang_num3
+			, lotto_dang_num4
+			, lotto_dang_num5
+			, lotto_dang_num6
+			, lotto_dang_num9
+			, inst_id
+			, inst_ip
+			, inst_tm
+			, updt_id
+			, updt_ip
+			, updt_tm
+			
+		)VALUES(
+			
+			#{lotto_cnt}
+			, #{lotto_date}
+			, #{lotto_dang1_cnt}
+			, #{lotto_dang1_amt}
+			, #{lotto_dang_num1}
+			, #{lotto_dang_num2}
+			, #{lotto_dang_num3}
+			, #{lotto_dang_num4}
+			, #{lotto_dang_num5}
+			, #{lotto_dang_num6}
+			, #{lotto_dang_num9}
+			, NOW()
+			, #{in_user}
+			, #{in_ip}
+			, NOW()
+			, #{up_user}
+			, #{up_ip}
+		)
+	</insert>
 	
 	
 </mapper>
