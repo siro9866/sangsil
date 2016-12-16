@@ -334,7 +334,7 @@
 	//페이징
 	function goPage(pageNo){
 		$("#pageNum").val(pageNo);
-		$("#frm").attr("action", "/sample/paramMap/listDang.mee");
+		$("#frm").attr("action", "/front/lotto/listDang.mee");
 		$("#frm").submit();
 	};
 </script>
