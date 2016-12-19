@@ -181,12 +181,12 @@
 	// 숫자만 입력
 	$(document).on("keyup", "input:text[numberOnly]", function() {$(this).val( $(this).val().replace(/[^0-9]/gi,"") );});
 	
-	$("#lotto_dang_num1").val("12");
-	$("#lotto_dang_num2").val("14");
-	$("#lotto_dang_num3").val("21");
-	$("#lotto_dang_num4").val("30");
-	$("#lotto_dang_num5").val("39");
-	$("#lotto_dang_num6").val("43");
+	$("#lotto_dang_num1").val("20");
+	$("#lotto_dang_num2").val("40");
+	$("#lotto_dang_num3").val("34");
+	$("#lotto_dang_num4").val("27");
+	$("#lotto_dang_num5").val("1");
+	$("#lotto_dang_num6").val("37");
 		
 	//페이징
 	function goPage(pageNo){
