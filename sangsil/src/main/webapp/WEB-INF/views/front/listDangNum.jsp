@@ -92,6 +92,10 @@
 			$("#frm").attr("action", "/front/lotto/listDangNum.mee");
 			$("#frm").submit();
 		});
+		$("#btnList").on("click", function(e) {
+			$("#frm").attr("action", "/front/lotto/list.mee");
+			$("#frm").submit();
+		});
 
 		$("#searchValue").val("${paramMap.searchValue}");
 		
