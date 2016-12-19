@@ -210,6 +210,7 @@
 		limit 1
 	</select>
 	
+	<!-- 로또 API 결과 최신당첨내역 저장 -->
 	<insert id="insert" parameterType="java.util.HashMap">
 		INSERT INTO t_lotto(
 			lotto_cnt
@@ -252,5 +253,50 @@
 		)
 	</insert>
 	
+	<!-- 당첨번호 리스트 보너스 제외-->
+	<select id ="listDangNum" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+		/* front.lotto.listDangNum */
+
+		select imsi.lotto_dang_num, sum(imsi.lotto_dang_num_cnt) lotto_dang_num_cnt
+		from(
+			SELECT lotto_dang_num1 lotto_dang_num, count(lotto_dang_num1) lotto_dang_num_cnt
+			FROM t_lotto
+			group by lotto_dang_num1
+			union all 
+			SELECT lotto_dang_num2 lotto_dang_num, count(lotto_dang_num2) lotto_dang_num_cnt
+			FROM t_lotto
+			group by lotto_dang_num2
+			union all 
+			SELECT lotto_dang_num3 lotto_dang_num, count(lotto_dang_num3) lotto_dang_num_cnt
+			FROM t_lotto
+			group by lotto_dang_num3
+			union all 
+			SELECT lotto_dang_num4 lotto_dang_num, count(lotto_dang_num4) lotto_dang_num_cnt
+			FROM t_lotto
+			group by lotto_dang_num4
+			union all 
+			SELECT lotto_dang_num5 lotto_dang_num, count(lotto_dang_num5) lotto_dang_num_cnt
+			FROM t_lotto
+			group by lotto_dang_num5
+			union all 
+			SELECT lotto_dang_num6 lotto_dang_num, count(lotto_dang_num6) lotto_dang_num_cnt
+			FROM t_lotto
+			group by lotto_dang_num6
+		) as imsi
+		group by imsi.lotto_dang_num
+		<choose>
+			<when test="searchValue != null and searchValue != ''">
+				<if test="searchValue == 'cntDesc'">
+					order by sum(imsi.lotto_dang_num_cnt) desc
+				</if>
+				<if test="searchValue == 'cntAsc'">
+					order by sum(imsi.lotto_dang_num_cnt) asc
+				</if>
+			</when>
+			<otherwise>
+				order by imsi.lotto_dang_num desc
+			</otherwise>
+		</choose>
+	</select>
 	
 </mapper>

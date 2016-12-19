@@ -17,4 +17,5 @@ public interface LottoService {
 	public List<Map<String, String>> listDang(Map<String, String> paramMap);
 	public Map<String, String> detail(Map<String, String> paramMap);
 	public JSONObject insert(Map<String, String> paramMap);
+	public List<Map<String, String>> listDangNum(Map<String, String> paramMap);
 }

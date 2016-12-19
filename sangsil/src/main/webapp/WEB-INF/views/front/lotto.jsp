@@ -29,7 +29,7 @@
 						</h1>
 						<ol class="breadcrumb">
 							<li>
-								<i class="fa fa-dashboard"></i>  <a href="index.html">Lotto</a>
+								<i class="fa fa-dashboard"></i>  <a href="/front/lotto/list.mee">Lotto</a>
 							</li>
 							<li class="active">
 								<i class="fa fa-table"></i> 당첨번호
@@ -43,7 +43,6 @@
 				<div class="row">
 					<form id="frm" name="frm" method="post">
 						<input type="hidden" name="pageNum" id="pageNum" value='${paramMap.pageNum}' />
-						<input type="hidden" name="favority_id" id="favority_id"/>					
 					
 						<div class="form-group input-group col-lg-12">
 							<input type="text" name="lotto_dang_num1" id="lotto_dang_num1" class="input-sm col-lg-1" placeholder="1" maxlength="2" numberOnly="true" value='${paramMap.lotto_dang_num1}'/>
@@ -128,6 +127,17 @@
 				<c:import url="/include.mee?fileName=/admin/include/paging"/>
 				<!--	E:페이징 -->
 				<!-- /.row -->
+				
+				<!--	S:버튼 -->
+				<div class="row">
+					<div class="col-lg-12">
+						<div class="panel pull-right">
+							<button type="button" id="btnList" class="btn btn-primary"><i class="fa fa-file "></i>&nbsp;당첨번호별현황</button>
+						</div>
+					</div>
+				</div>
+				<!--	E:버튼 -->
+				
 			</div>
 			<!-- /.container-fluid -->
 
@@ -144,7 +154,7 @@
 
 <script>
 	//검색어 키업 이벤트발생시 검색버튼 활성화 및 엔터키 이벤트 발생
-	$("#lotto_dang_num6").bind("keyup", function(e){
+	$("#lotto_dang_num6").on("keyup", function(e){
 		//엔터키 클릭시 검색
 		if (e.keyCode == 13){
 			$("#pageNum").val("1");
@@ -155,9 +165,16 @@
 	
 	
 	//검색어 입력후 엔터키 이벤트
-	$("#btnSearch").bind("click", function(e) {
+	$("#btnSearch").on("click", function(e) {
 		$("#pageNum").val("1");
 		$("#frm").attr("action", "/front/lotto/listDang.mee");
+		$("#frm").submit();
+	});		
+	
+	//검색어 입력후 엔터키 이벤트
+	$("#btnList").on("click", function(e) {
+		$("#pageNum").val("1");
+		$("#frm").attr("action", "/front/lotto/listDangNum.mee");
 		$("#frm").submit();
 	});		
 	

@@ -208,6 +208,31 @@ public class LottoController {
 	}
 	
 	/**
+	 * 당첨번호 현황
+	 * @param paramMap
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping(value="/listDangNum")
+	public ModelAndView listDangNum(@RequestParam Map<String, String> paramMap, HttpServletRequest request){
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("/front/listDangNum");
+
+		List<Map<String, String>> resultList = null;
+		
+		try {
+			resultList = lottoService.listDangNum(paramMap);
+		} catch (Exception e) {
+			logger.info("Exception:" + e.toString());
+		}
+		
+		mav.addObject("paramMap", paramMap);
+		mav.addObject("resultList", resultList);
+		return mav;
+	}
+	
+	
+	/**
 	 * 최근 당첨결과 스케줄로 가져오기
 	 * 초 분 시간 일(Day of Month) 월 요일(Day of Week, 1-7 : SUN-SAT) 년도(생략가능) 의 순이다.
 	 * cron="0 0 0 ? * 7 : 매주 일요일 0시 0분 0초에 스케줄 돌으라

@@ -38,7 +38,7 @@
 						</h1>
 						<ol class="breadcrumb">
 							<li>
-								<i class="fa fa-dashboard"></i>  <a href="index.html">Lotto</a>
+								<i class="fa fa-dashboard"></i>  <a href="/front/lotto/list.mee">Lotto</a>
 							</li>
 							<li class="active">
 								<i class="fa fa-table"></i> 당첨결과
@@ -52,7 +52,6 @@
 				<div class="row">
 					<form id="frm" name="frm" method="post">
 						<input type="hidden" name="pageNum" id="pageNum" value='${paramMap.pageNum}' />
-						<input type="hidden" name="favority_id" id="favority_id"/>					
 					
 						<div class="form-group input-group col-lg-12">
 							<input type="text" name="lotto_dang_num1" id="lotto_dang_num1" class="input-sm col-lg-1 lotto-bg1" placeholder="1" maxlength="2" numberOnly="true" value='${paramMap.lotto_dang_num1}'/>

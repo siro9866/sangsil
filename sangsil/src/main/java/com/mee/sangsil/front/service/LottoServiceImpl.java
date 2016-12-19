@@ -43,5 +43,11 @@ public class LottoServiceImpl implements LottoService{
 		json =  (JSONObject) dao.detail("front.lotto.insert", paramMap);
 		return json;
 	}
+
+	@Override
+	public List<Map<String, String>> listDangNum(Map<String, String> paramMap) {
+		List<Map<String, String>> result = dao.list("front.lotto.listDangNum", paramMap);
+		return result;
+	}
 	
 }
