@@ -1,57 +1,74 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE log4j:configuration PUBLIC "-//APACHE//DTD LOG4J 1.2//EN" "log4j.dtd">
-<log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/">
-
-	<!-- Appenders -->
-	<appender name="console" class="org.apache.log4j.ConsoleAppender">
-		<param name="Target" value="System.out" />
-		<layout class="org.apache.log4j.PatternLayout">
-			<param name="ConversionPattern" value="[%d]%-5p: %F %L - %m%n" />
+<!DOCTYPE xml>
+<configuration>
+	<appender name="CONSOL" class="ch.qos.logback.core.ConsoleAppender">
+		<layout class="ch.qos.logback.classic.PatternLayout">
+			<Pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</Pattern>
 		</layout>
 	</appender>
-	
-	<!-- Application Loggers -->
-	<logger name="com.me.sangsil">
-		<level value="info" />
-	</logger>
-	
+	<appender name="CONSOL2" class="ch.qos.logback.core.ConsoleAppender">
+		<layout class="ch.qos.logback.classic.PatternLayout">
+			<Pattern>%d{yyyy-MM-dd HH:mm:ss} %-5p: %c - %n%m%n</Pattern>
+		</layout>
+	</appender>
+	<appender name="FILE"
+		class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<FileNamePattern>/workspace/TBP/log/logFile.%d{yyyy-MM-dd}.log</FileNamePattern>
+		</rollingPolicy>
+		<layout class="ch.qos.logback.classic.PatternLayout">
+			<Pattern>%d{yyyy-MM-DD HH:mm:ss.SSS} %-5level %logger{36} - %msg%n</Pattern>
+		</layout>
+	</appender>
+
 	<!-- 3rdparty Loggers -->
+	<logger name="com.sktelecom.tbizpoint">
+		<level value="DEBUG" />
+	</logger>
+
 	<logger name="org.springframework.core">
-		<level value="info" />
+		<level value="ERROR" />
 	</logger>
-	
+
 	<logger name="org.springframework.beans">
-		<level value="info" />
+		<level value="ERROR" />
 	</logger>
-	
+
 	<logger name="org.springframework.context">
-		<level value="info" />
+		<level value="ERROR" />
 	</logger>
 
 	<logger name="org.springframework.web">
-		<level value="info" />
-	</logger>
-	
-	<logger name="java.sql.Connection">
-		<level value="info" />
-	</logger>
-	 
-	<logger name="java.sql.Statement">
-		<level value="info" />
-	</logger>
-	 
-	<logger name="java.sql.PreparedStatement">
-		<level value="info" />
-	</logger>
-	 
-	<logger name="java.sql.ResultSet">
-		<level value="info" />
+		<level value="ERROR" />
 	</logger>
 
-	<!-- Root Logger -->
-	<root>
-		<priority value="TRACE" />
-		<appender-ref ref="console" />
+	<logger name="jdbc.sqlonly" additivity="false">
+		<level value="DEBUG" />
+		<appender-ref ref="CONSOL2" />
+	</logger>
+
+	<logger name="jdbc.audit" additivity="false">
+		<level value="ERROR" />
+		<appender-ref ref="CONSOL2" />
+	</logger>
+
+	<logger name="org.apache.commons.dbcp.BasicDataSource"
+		additivity="false">
+		<level value="DEBUG" />
+		<appender-ref ref="CONSOL2" />
+	</logger>
+
+	<root level="DEBUG">
+		<appender-ref ref="CONSOL" />
+		<appender-ref ref="FILE" />
 	</root>
-	
-</log4j:configuration>
+	<root level="ERROR">
+		<appender-ref ref="CONSOL" />
+		<appender-ref ref="FILE" />
+	</root>
+	<!-- <root level="INFO"> -->
+	<!-- <appender-ref ref="CONSOL" /> -->
+	<!-- <appender-ref ref="FILE" /> -->
+	<!-- </root> -->
+
+</configuration>

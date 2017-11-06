@@ -1,7 +1,42 @@
-UPDATE t_user SET
-	login_cnt = login_cnt + 1
-	, login_date = NOW()
-	, up_date = NOW()
-	, up_user = #{up_user}
-	, up_ip = #{up_ip}
-WHERE user_id = #{up_ip}
+<RESULT>S</RESULT>
+<RESULT_CODE>CSP_SVP_I0001</RESULT_CODE>
+<RESULT_MESSAGE>서비스가 정상적으로 처리되었습니다.</RESULT_MESSAGE>
+<PLATFORM_MODUS>NR</PLATFORM_MODUS>
+<RECORD_COUNT>1</RECORD_COUNT>
+<OUT2_RECORD_COUNT>2</OUT2_RECORD_COUNT>
+<RESULT>0</RESULT>
+<LIST>
+	<PROD_ID>PD00013285</PROD_ID>
+	<INV_ITM_CD>OCB0223</INV_ITM_CD>
+	<INV_ITM_NM>Smart RTC(기본) 기본료                                                          </INV_ITM_NM>
+	<INV_ITM_TYP_CD>RC</INV_ITM_TYP_CD>
+	<INV_ITM_STRD_FEE_AMT>850000</INV_ITM_STRD_FEE_AMT>
+	<TAX_YN>Y</TAX_YN>
+</LIST>
+<LIST>
+	<PROD_ID>PD00013285</PROD_ID>
+	<INV_ITM_CD>OCP0038</INV_ITM_CD>
+	<INV_ITM_NM>Smart RTC(기본) 위약금                                                          </INV_ITM_NM>
+	<INV_ITM_TYP_CD>PN</INV_ITM_TYP_CD>
+	<INV_ITM_STRD_FEE_AMT>0</INV_ITM_STRD_FEE_AMT>
+	<TAX_YN>Y</TAX_YN>
+</LIST>
+
+
+
+
+<RESULT>S</RESULT>
+<RESULT_CODE>CSP_SVP_I0001</RESULT_CODE>
+<RESULT_MESSAGE>서비스가 정상적으로 처리되었습니다.</RESULT_MESSAGE>
+<PLATFORM_MODUS>NR</PLATFORM_MODUS>
+<RECORD_COUNT>1</RECORD_COUNT>
+<OUT2_RECORD_COUNT>1</OUT2_RECORD_COUNT>
+<RESULT>0</RESULT>
+<LIST>
+	<PROD_ID>PD00001154</PROD_ID>
+	<INV_ITM_CD>OCV0135</INV_ITM_CD>
+	<INV_ITM_NM>T biz 그룹웨어 부가기본료                                                       </INV_ITM_NM>
+	<INV_ITM_TYP_CD>RC</INV_ITM_TYP_CD>
+	<INV_ITM_STRD_FEE_AMT>0</INV_ITM_STRD_FEE_AMT>
+	<TAX_YN>Y</TAX_YN>
+</LIST>
