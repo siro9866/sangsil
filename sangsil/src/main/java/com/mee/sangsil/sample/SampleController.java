@@ -290,4 +290,22 @@ public class SampleController {
 //		
 //		return mav;
 //	}
+
+
+	/**
+	 * excelUpload 테스트
+	 * @param paramMap
+	 * @param request
+	 * @param response
+	 * @param session
+	 * @return
+	 */
+	@RequestMapping(value = "/sample/excelUpload")
+	public ModelAndView excelUpload(@RequestParam Map<String, String> paramMap, HttpServletRequest request,
+			HttpServletResponse response, HttpSession session) {
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("/sample/excelUpload");
+		return mav;
+	}
+
 }

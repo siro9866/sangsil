@@ -42,6 +42,7 @@
 		
 		<ul>
 			<li id="/sample/newException.mee?loginId=&userPw=">Exception 발생</li>
+			<li id="/sample/excelUpload.mee?loginId=&userPw=">Excel 업로드</li>
 		</ul>
 
 		
