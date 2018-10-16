@@ -39,7 +39,7 @@ public class HomeController {
 		return "home";
 	}
 	
-	@Scheduled(cron = "0/5 * * * * *")
+	@Scheduled(cron = "0/5 10 * * * *")
 	public void SchedulerTest(){
 		Calendar calendar = Calendar.getInstance();
 
