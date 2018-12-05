@@ -10,19 +10,17 @@ import org.json.simple.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-import com.mee.sangsil.common.FilesUtil;
 import com.mee.sangsil.dao.Dao;
-import com.mee.sangsil.dto.SampleDto;
 import com.mee.sangsil.dto.FileDto;
+import com.mee.sangsil.dto.SampleDto;
 
 @Service("sampleService")
-public class SampleServiceImpl implements SampleService{
+public class SampleServiceImpl implements SampleService {
 
 	private static final Logger logger = LoggerFactory.getLogger(SampleServiceImpl.class);
-	
+
 	@Autowired
 	private Dao dao;
 
@@ -31,7 +29,7 @@ public class SampleServiceImpl implements SampleService{
 		List<Map<String, String>> result = dao.list(sql, paramMap);
 		return result;
 	}
-	
+
 	@Override
 	public SampleDto detail(String sql, Map<String, String> paramMap) {
 		SampleDto result = (SampleDto) dao.detail(sql, paramMap);

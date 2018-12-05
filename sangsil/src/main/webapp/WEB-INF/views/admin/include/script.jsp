@@ -12,7 +12,8 @@
 <!-- 	<script src="/resources/js/jquery-1.11.2.min.js"></script> -->
 
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js" type="text/javascript" language="javascript"></script>
-
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.form/4.2.2/jquery.form.min.js"></script>
+	
 	<!-- layer Popup -->
 	<script src="/resources/js/bPopup.js"></script>
 	

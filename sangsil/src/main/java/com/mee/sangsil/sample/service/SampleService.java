@@ -20,4 +20,5 @@ public interface SampleService {
 	public int delete(String sql, Map<String, String> paramMap, HttpServletRequest request);
 	
 	public String getString(String sql, HashMap<String, String> map);
+	
 }
