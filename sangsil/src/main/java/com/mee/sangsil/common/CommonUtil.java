@@ -1,18 +1,21 @@
 package com.mee.sangsil.common;
 
+import java.lang.reflect.Array;
 import java.math.BigInteger;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.security.SecureRandom;
+import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.json.simple.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.mee.sangsil.admin.controller.BoardController;
 import com.mee.sangsil.dto.ComDto;
+
+import net.sf.json.JSONObject;
 
 
 public class CommonUtil {
@@ -53,7 +56,7 @@ public class CommonUtil {
 		json.put("rCode", "9999");
 		json.put("rMsg", "실패");
 		json.put("rReason", e.toString());
-		logger.info("FAIL_PROCESS:"+json.toJSONString());
+		logger.info("FAIL_PROCESS:"+json.toString());
 	}
 
 	/**
@@ -65,7 +68,7 @@ public class CommonUtil {
 		json.put("rCode", "9999");
 		json.put("rMsg", "실패");
 		json.put("rReason", str);
-		logger.info("FAIL_PROCESS:"+json.toJSONString());
+		logger.info("FAIL_PROCESS:"+json.toString());
 	}
 	
 	/**
@@ -130,6 +133,24 @@ public class CommonUtil {
 	public static String generateState(){
 		SecureRandom random = new SecureRandom();
 		return new BigInteger(130, random).toString(32);
+	}
+	
+	@SuppressWarnings("rawtypes")
+	public static boolean isEmpty(Object obj) {
+		if (obj instanceof String)
+			return obj == null || "".equals(obj.toString().trim());
+		else if (obj instanceof List)
+			return obj == null || ((List) obj).isEmpty();
+		else if (obj instanceof Map)
+			return obj == null || ((Map) obj).isEmpty();
+		else if (obj instanceof Object[])
+			return obj == null || Array.getLength(obj) == 0;
+		else
+			return obj == null;
+	}
+
+	public static boolean isNotEmpty(Object s) {
+		return !isEmpty(s);
 	}
 	
 }
